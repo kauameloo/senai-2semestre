@@ -16,3 +16,7 @@ SELECT * FROM TipoDePet
 SELECT * FROM Raca
 SELECT * FROM Pet
 SELECT * FROM Atendimento
+
+UPDATE Veterinario
+SET CRMV = '2753944820'
+WHERE IdVeterinario = 2
