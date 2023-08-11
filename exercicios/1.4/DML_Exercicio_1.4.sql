@@ -1,17 +1,26 @@
---DML - INSERIR DADOS
+-- DML - Inserir dados nas tabelas
 
-INSERT INTO Artista VALUES('Leviano'), ('Tiao Carreiro')
+-- Usar o banco criado
+USE Exercicio_1_4
 
-INSERT INTO Estilo VALUES('Trap'), ('Sertanejo')
+-- Inserir dados na tabela
+INSERT INTO Artistas(Nome)
+VALUES ('Eduardo'), ('Carlos'), ('Gabriel')
 
-INSERT INTO Permissao VALUES('ADMIN'), ('DEFAULT')
+INSERT INTO	Estilos(Nome)
+VALUES ('Rock'), ('MPB'), ('Pop')
 
-INSERT INTO Usuario VALUES(1, 'Kaua', 'kaua@email.com', 'kaua1234'), (2, 'Carlos', 'Carlos@email.com', 'coxinha123')
+INSERT INTO AlbunsEstilos(IdAlbum, IdEstilo)
+VALUES (1, 1), (2, 3), (3, 2), (4, 2)
 
-INSERT INTO Album VALUES(1, 1, 'Vetin', 'NAO', 58, '15/08/2023', 'SP'), (2, 2, 'No Som Da Viola', 'SIM', 30, '05/07/1993' , 'MG')
+INSERT INTO Usuarios(Nome, Email, Senha, Permissao)
+VALUES 
+    ('Gustavo', 'gustavo@email.com', 'musica123', 'Usuário'),
+    ('Guilherme', 'guilherme@email.com', 'guilherme159', 'Administrador')
 
-SELECT * FROM Artista
-SELECT * FROM Estilo
-SELECT * FROM Permissao
-SELECT * FROM Usuario
-SELECT * FROM Album
+INSERT INTO Albuns(IdArtista, Titulo, DataLancamento, Localizacao, QtdMinutos, Ativo)
+VALUES
+    (1, 'Programming musics', '2022-12-20', 'São Caetano do Sul', 112, 1),
+    (2, 'SQL-M Sequential Music', '2023-04-01', 'São Paulo', 183, 1),
+    (2, 'Coders EP', '2022-10-25', 'Santo André', 98, 1),
+	(3, 'Database Manager Sounds', '2023-11-15', 'Presidente Epitácio', 55, 0)

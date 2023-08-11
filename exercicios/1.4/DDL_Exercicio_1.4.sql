@@ -1,51 +1,41 @@
---DDL - CRIAR DB
-CREATE DATABASE Exercicio_1_4
+-- DDL - Criar bancos e tabelas
 
-USE Exercicio_1_4
+-- Criar o banco de dados
+CREATE DATABASE Exercicio_1_4;
 
---CRIAR TABELAS
-CREATE TABLE Artista
-(
+-- Usar o banco criado
+USE Exercicio_1_4;
+
+-- Criar tabelas do banco
+CREATE TABLE Artistas (
 	IdArtista INT PRIMARY KEY IDENTITY,
-	Nome VARCHAR(20) NOT NULL,
+	Nome VARCHAR(30) NOT NULL,
 );
 
-CREATE TABLE Estilo
-(
+CREATE TABLE Estilos (
 	IdEstilo INT PRIMARY KEY IDENTITY,
-	Nome VARCHAR(20) NOT NULL,
+	Nome VARCHAR(40) NOT NULL UNIQUE,
 );
 
-CREATE TABLE Permissao
-(
-	IdPermissao INT PRIMARY KEY IDENTITY,
-	Cargo VARCHAR(20) NOT NULL,
-);
-
-CREATE TABLE Usuario
-(
-	IdUsuario INT PRIMARY KEY IDENTITY,
-	IdPermissao INT FOREIGN KEY REFERENCES Permissao(IdPermissao),
-	Nome VARCHAR(20) NOT NULL,
-	Email VARCHAR(20) NOT NULL UNIQUE,
-	Senha VARCHAR(20) NOT NULL,
-);
-
-CREATE TABLE Album
-(
+CREATE TABLE Albuns (
 	IdAlbum INT PRIMARY KEY IDENTITY,
-	IdArtista INT FOREIGN KEY REFERENCES Artista(IdArtista),
-	IdEstilo INT FOREIGN KEY REFERENCES Estilo(IdEstilo),
-	Titulo VARCHAR(20) NOT NULL,
-	Ativo VARCHAR(3) NOT NULL,
-	Duracao INT NOT NULL,
-	Lancamento DATE NOT NULL,
-	Localizacao VARCHAR(20) NOT NULL,
+	IdArtista INT FOREIGN KEY REFERENCES Artistas(IdArtista) NOT NULL,
+	Titulo VARCHAR(80) NOT NULL,
+	DataLancamento DATE NOT NULL,
+	Localizacao VARCHAR(50) NOT NULL,
+	QtdMinutos INT NOT NULL,
+	Ativo BIT NOT NULL,
 );
 
+CREATE TABLE AlbunsEstilos (
+	IdAlbum INT FOREIGN KEY REFERENCES Albuns(IdAlbum) NOT NULL,
+	IdEstilo INT FOREIGN KEY REFERENCES Estilos(IdEstilo) NOT NULL,
+);
 
-SELECT * FROM Artista
-SELECT * FROM Estilo
-SELECT * FROM Permissao
-SELECT * FROM Usuario
-SELECT * FROM Album
+CREATE TABLE Usuarios (
+	IdUsuario INT PRIMARY KEY IDENTITY,
+	Nome VARCHAR(50) NOT NULL,
+	Email VARCHAR(50) NOT NULL UNIQUE,
+	Senha VARCHAR(32) NOT NULL,
+	Permissao VARCHAR(40) NOT NULL,
+);
