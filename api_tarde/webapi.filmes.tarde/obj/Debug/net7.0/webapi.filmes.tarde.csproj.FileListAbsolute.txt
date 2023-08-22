@@ -24,3 +24,12 @@ C:\Users\44506315871\Desktop\api_tarde\webapi.filmes.tarde\obj\Debug\net7.0\refi
 C:\Users\44506315871\Desktop\api_tarde\webapi.filmes.tarde\obj\Debug\net7.0\webapi.filmes.tarde.pdb
 C:\Users\44506315871\Desktop\api_tarde\webapi.filmes.tarde\obj\Debug\net7.0\webapi.filmes.tarde.genruntimeconfig.cache
 C:\Users\44506315871\Desktop\api_tarde\webapi.filmes.tarde\obj\Debug\net7.0\ref\webapi.filmes.tarde.dll
+C:\Users\44506315871\Desktop\senai_sprint1_bd\api_tarde\webapi.filmes.tarde\obj\Debug\net7.0\webapi.filmes.tarde.csproj.AssemblyReference.cache
+C:\Users\44506315871\Desktop\senai_sprint1_bd\api_tarde\webapi.filmes.tarde\obj\Debug\net7.0\webapi.filmes.tarde.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\44506315871\Desktop\senai_sprint1_bd\api_tarde\webapi.filmes.tarde\obj\Debug\net7.0\webapi.filmes.tarde.AssemblyInfoInputs.cache
+C:\Users\44506315871\Desktop\senai_sprint1_bd\api_tarde\webapi.filmes.tarde\obj\Debug\net7.0\webapi.filmes.tarde.AssemblyInfo.cs
+C:\Users\44506315871\Desktop\senai_sprint1_bd\api_tarde\webapi.filmes.tarde\obj\Debug\net7.0\webapi.filmes.tarde.csproj.CoreCompileInputs.cache
+C:\Users\44506315871\Desktop\senai_sprint1_bd\api_tarde\webapi.filmes.tarde\obj\Debug\net7.0\webapi.filmes.tarde.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\44506315871\Desktop\senai_sprint1_bd\api_tarde\webapi.filmes.tarde\obj\Debug\net7.0\webapi.filmes.tarde.dll
+C:\Users\44506315871\Desktop\senai_sprint1_bd\api_tarde\webapi.filmes.tarde\obj\Debug\net7.0\refint\webapi.filmes.tarde.dll
+C:\Users\44506315871\Desktop\senai_sprint1_bd\api_tarde\webapi.filmes.tarde\obj\Debug\net7.0\webapi.filmes.tarde.pdb
