@@ -4,15 +4,18 @@ namespace webapi.filmes.tarde.Interfaces
 {
     public interface IFilmeRepository
     {
-        void Cadastrar(FilmeDomain novoFilme);
+        void Cadastrar(FilmeDomain Filme);
 
         List<FilmeDomain> ListarTodos();
-        FilmeDomain BuscarPorID(int id);
 
-        void AtualizarIdCorpo(FilmeDomain filme);
+        FilmeDomain BuscarPorId(int Id);
 
-        void AtualizarIdUrl(int id, FilmeDomain filme);
+
+        void AtualizarIdCorpo(FilmeDomain Filme);
+
+        void AtualizarIdURL(int Id, FilmeDomain filme);
 
         void Deletar(int id);
+            
     }
 }

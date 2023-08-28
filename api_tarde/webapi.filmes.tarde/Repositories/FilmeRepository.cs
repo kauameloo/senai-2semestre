@@ -5,22 +5,33 @@ namespace webapi.filmes.tarde.Repositories
 {
     public class FilmeRepository : IFilmeRepository
     {
-        public void AtualizarIdCorpo(FilmeDomain filme)
+
+        /// <summary>
+        /// STRING DE CONEXAO COM O BANCO DE DADOS QUE RECEBEM OS SEGUINTES PARÂMETROS
+        /// DATA SOURCE = nome do servidor;
+        /// INITIAL CATALOG = Nome do banco de dados;
+        /// AUTENTIFICAÇÃO:
+        ///     - WINDOWS =  Integrated Secutiry = True;
+        ///     - SQLSERVER = User Id = sa; Senha = Senha;
+        /// </summary>
+        /// 
+       
+        public void AtualizarIdCorpo(FilmeDomain Filme)
         {
             throw new NotImplementedException();
         }
 
-        public void AtualizarIdUrl(int id, FilmeDomain filme)
+        public void AtualizarIdURL(int Id, FilmeDomain filme)
         {
             throw new NotImplementedException();
         }
 
-        public FilmeDomain BuscarPorID(int id)
+        public FilmeDomain BuscarPorId(int Id)
         {
             throw new NotImplementedException();
         }
 
-        public void Cadastrar(FilmeDomain novoFilme)
+        public void Cadastrar(FilmeDomain Filme)
         {
             throw new NotImplementedException();
         }

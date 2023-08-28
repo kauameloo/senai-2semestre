@@ -1,53 +1,63 @@
-﻿using webapi.filmes.tarde.Domains;
+﻿using System.CodeDom.Compiler;
+using webapi.filmes.tarde.Domains;
 
 namespace webapi.filmes.tarde.Interfaces
 {
     /// <summary>
-    /// Interface responsável pelo repositório GeneroRepository
-    /// Define os métodos que serão implementados pelo repositório
+    /// Responsavel pelo repositorio generorepository
+    /// define os metodos que tera no repositorio
     /// </summary>
     public interface IGeneroRepository
-    {
-        //CRUD
+    { //CRUD
 
-        //TipoDeRetorno NomeMetodo(TipoParametro Parametro)
+        //TipoDeRetorno NomeMetodo(TipoParametro NomeParametro)
 
-        /// <summary>
-        /// Cadastrar novo Genero
-        /// </summary>
-        /// <param name="novoGenero">Objeto que será cadastrado</param>
-        void Cadastrar(GeneroDomain novoGenero);
 
         /// <summary>
-        /// Retornar todos os gêneros cadastrados
+        /// Responsavel por cadastrar um novo genero
         /// </summary>
-        /// <returns>Uma lista de gêneros</returns>
+        /// <param name="NovoGenero">Objeto que sera cadastrado</param>
+        void Cadastrar(GeneroDomain NovoGenero);
+
+        /// <summary>
+        /// Retornar todos os generos cadastrados
+        /// </summary>
+        /// <returns> Uma lista de Objeto </returns>
         List<GeneroDomain> ListarTodos();
 
-        /// <summary>
-        /// Buscar um objeto através do seu ID
-        /// </summary>
-        /// <param name="id">ID do objeto que sera buscado</param>
-        /// <returns>Objeto que foi buscado</returns>
-        GeneroDomain BuscarPorID(int id);
 
         /// <summary>
-        /// Atualizar um gênero existente passando o ID pelo corpo da requisição
+        /// buscar um objeto pelo seu id 
         /// </summary>
-        /// <param name="genero">Objeto com as novas informações</param>
-        void AtualizarIdCorpo(GeneroDomain genero);
+        /// <param name="id">id od objeto que sera buscado </param>
+        /// <returns>objeto que foi buscado</returns>       
+        GeneroDomain BuscarPorId(int id);
+
 
         /// <summary>
-        /// Atualizar um gênero existente passando o id pela URL da requisição
+        /// Atualiza um genero existente passando o Id pelo corpo da requisição
         /// </summary>
-        /// <param name="id">ID do objeto a ser atualizado</param>
-        /// <param name="genero">Objeto com as novas informações</param>
-        void AtualizarIdUrl(int id, GeneroDomain genero);
+        /// <param name="Genero">Objeto genero com as novas informações</param>
+
+        void AtualizarIdCorpo(int Id, GeneroDomain Genero);
 
         /// <summary>
-        /// Deletar um gênero existente
+        ///  Atualiza um genero existente passando o Id pela url da requisição
         /// </summary>
-        /// <param name="id">ID do objeto a ser deletado</param>
-        void Deletar(int id);
+        /// <param name="Id">id do objeto a ser atualizado</param>
+        /// <param name="Genero">Objeto com as novas informações</param>
+
+        void AtualizarIdUrl(int Id, GeneroDomain Genero);
+
+        /// <summary>
+        /// Deleta o genero existente pelo id
+        /// </summary>
+        /// <param name="Id">Id do objeto a ser deletado</param>
+        void Deletar(int Id);
+
+
+
+
+
     }
 }

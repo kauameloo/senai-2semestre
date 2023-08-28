@@ -2,18 +2,17 @@
 
 namespace webapi.filmes.tarde.Domains
 {
-    /// <summary>
-    /// Classe que representa a entidade/tabela Filme
-    /// </summary>
-    public class FilmeDomain
+    public class FilmeDomain 
     {
-        public int IdFilme { get; set; }
+        public int IdFIlme { get; set; }
+
+        [Required(ErrorMessage = "O titlulo do filme é Obrigatorio")]
+        public string? Titulo { get; set; }
         public int IdGenero { get; set; }
 
-        //Referencia para a classe Genero
+
+        //Referencia para a classe genero
         public GeneroDomain? Genero { get; set; }
 
-        [Required(ErrorMessage = "O título do filme é obrigatório!")]
-        public string Titulo { get; set;}
     }
 }
