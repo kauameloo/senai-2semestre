@@ -99,14 +99,9 @@ namespace webapi.filmes.tarde.Repositories
 
                 using (SqlCommand cmd = new SqlCommand(QueryDelete, con))
                 {
-                   
-
                     con.Open();
-
                     cmd.ExecuteNonQuery();
                 }
-
-
             }
         }
 
