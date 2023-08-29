@@ -11,7 +11,7 @@ namespace webapi.filmes.tarde.Interfaces
         FilmeDomain BuscarPorId(int Id);
 
 
-        void AtualizarIdCorpo(int Id, FilmeDomain Filme);
+        void AtualizarIdCorpo(FilmeDomain Filme);
 
         void AtualizarIdURL(int Id, FilmeDomain filme);
 

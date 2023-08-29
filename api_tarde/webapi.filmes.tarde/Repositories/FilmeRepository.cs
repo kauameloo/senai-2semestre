@@ -19,7 +19,7 @@ namespace webapi.filmes.tarde.Repositories
         private string? stringConexao = "Data Source = NOTE19-S15; Initial Catalog = FilmesTarde; User Id = sa; pwd = Senai@134";
 
 
-        public void AtualizarIdCorpo(int Id, FilmeDomain Filme)
+        public void AtualizarIdCorpo(FilmeDomain Filme)
         {
             using (SqlConnection con = new SqlConnection(stringConexao))
             {
@@ -29,7 +29,7 @@ namespace webapi.filmes.tarde.Repositories
                 {
                     cmd.Parameters.AddWithValue("@TituloInserir", Filme.Titulo);
                     cmd.Parameters.AddWithValue("@GeneroInserir", Filme.IdGenero);
-                    cmd.Parameters.AddWithValue("@IdFilme", Id);
+                    cmd.Parameters.AddWithValue("@IdFilme", Filme.IdFilme);
 
                     con.Open();
 

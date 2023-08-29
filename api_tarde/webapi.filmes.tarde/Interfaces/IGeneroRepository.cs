@@ -39,7 +39,7 @@ namespace webapi.filmes.tarde.Interfaces
         /// </summary>
         /// <param name="Genero">Objeto genero com as novas informações</param>
 
-        void AtualizarIdCorpo(int Id, GeneroDomain Genero);
+        void AtualizarIdCorpo(GeneroDomain Genero);
 
         /// <summary>
         ///  Atualiza um genero existente passando o Id pela url da requisição

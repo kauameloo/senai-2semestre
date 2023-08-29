@@ -147,11 +147,11 @@ namespace webapi.filmes.tarde.Controllers
 
 
         [HttpPut]
-        public IActionResult PutId(int Id, GeneroDomain genero)
+        public IActionResult PutId(GeneroDomain genero)
         {
             try
             {
-               _GeneroRepository.AtualizarIdCorpo(Id, genero);
+               _GeneroRepository.AtualizarIdCorpo(genero);
 
                 return StatusCode(204);
             }
