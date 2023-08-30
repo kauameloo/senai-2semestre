@@ -18,26 +18,29 @@ namespace webapi.filmes.tarde.Controllers
         }
 
         [HttpGet]
-        public IActionResult get(string email, string senha)
+        public IActionResult Get(string email, string senha)
         {
-
             try
             {
-                //faz chamada para o metodo cadastrar
+                // Faz chamada para o método de login
                 UsuarioDomain usuarioDomain = _UsuarioRepository.Login(email, senha);
 
-                //retorna um statusCode
-                return StatusCode(201);
-
+                if (usuarioDomain != null)
+                {
+                    // Login aprovado, você pode retornar um resultado com informações do usuário
+                    return Ok(usuarioDomain);
+                }
+                else
+                {
+                    // Login falhou, retorna um status Unauthorized (401)
+                    return Unauthorized();
+                }
             }
             catch (Exception erro)
             {
-                //retorna um status code BadRequest (400) e a mensagem de erro
+                // Retorna um status code BadRequest (400) e a mensagem de erro
                 return BadRequest(erro.Message);
-
             }
-
-
         }
     }
 }

@@ -43,11 +43,11 @@ namespace webapi.filmes.tarde.Repositories
 
         public UsuarioDomain Login(string email, string senha)
         {
-            UsuarioDomain usuario = new UsuarioDomain();
+            UsuarioDomain usuario = null;
 
             using (SqlConnection con = new SqlConnection(stringConexao))
             {
-                string querySelect = "select Email, Senha FROM Usuario WHERE Email = @Email AND Senha = @Senha";
+                string querySelect = "SELECT IdUsuario, Permissao, Email, Senha FROM Usuario WHERE Email = @Email AND Senha = @Senha";
 
                 using (SqlCommand cmd = new SqlCommand(querySelect, con))
                 {
@@ -56,9 +56,22 @@ namespace webapi.filmes.tarde.Repositories
 
                     con.Open();
 
-                    cmd.ExecuteNonQuery();
+                    using (SqlDataReader rdr = cmd.ExecuteReader())
+                    {
+                        if (rdr.Read())
+                        {
+                            usuario = new UsuarioDomain()
+                            {
+                                IdUsuario = Convert.ToInt32(rdr["IdUsuario"]),
+                                Email = rdr["Email"].ToString(),
+                                Senha = rdr["Senha"].ToString(),
+                                Permissao = rdr["Permissao"].ToString()
+                            };
+                        }
+                    }
                 }
             }
+
             return usuario;
         }
     }
