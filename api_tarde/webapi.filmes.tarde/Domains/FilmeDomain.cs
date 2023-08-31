@@ -6,7 +6,7 @@ namespace webapi.filmes.tarde.Domains
     {
         public int IdFilme { get; set; }
 
-        [Required(ErrorMessage = "O titlulo do filme é Obrigatorio")]
+        [Required(ErrorMessage = "O titulo do filme é Obrigatorio")]
         public string? Titulo { get; set; }
         public int IdGenero { get; set; }
 
