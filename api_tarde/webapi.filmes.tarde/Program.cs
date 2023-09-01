@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 
@@ -5,6 +6,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 //adicionar o serviço de controllers
 builder.Services.AddControllers();
+
+//Adiciona serviço de autenticação JWT Bearer
+builder.Services.AddAuthentication(Options =>
+{
+    Options.DefaultChallengeScheme = "JwtBearer";
+    Options.DefaultAuthenticateScheme = "JwtBearer";
+})
+
+//Define os parâmetros de validação do token
+.AddJwtBearer(options => { });//paramos aqui.. continuar na segunda
 
 //adicona o gerador de swagger 
 builder.Services.AddSwaggerGen(options =>
