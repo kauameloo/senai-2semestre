@@ -20,22 +20,16 @@ namespace webapi.filmes.tarde.Controllers
             _UsuarioRepository = new UsuarioRepository();
         }
 
-        [HttpGet]
-        public IActionResult Get(UsuarioDomain usuario)
+        [HttpPost]
+        public IActionResult Post(UsuarioDomain usuario)
         {
             try
             {
                 // Faz chamada para o método de login
                 UsuarioDomain usuarioDomain = _UsuarioRepository.Login(usuario.Email, usuario.Senha);
 
-                if (usuarioDomain != null)
+                if (usuarioDomain == null)
                 {
-                    // Login aprovado, você pode retornar um resultado com informações do usuário
-                    return Ok(usuarioDomain);
-                }
-                else
-                {
-                    // Login falhou, retorna um status Unauthorized (401)
                     return NotFound("Usuário não encontrado, email ou senha inválidos!");
                 }
 
