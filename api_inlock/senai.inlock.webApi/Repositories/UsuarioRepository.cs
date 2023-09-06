@@ -41,12 +41,13 @@ namespace senai.inlock.webApi.Repositories
                                 IdUsuario = Convert.ToInt32(rdr["IdUsuario"]),
                                 IdTipoUsuario = Convert.ToInt32(rdr["IdTipoUsuario"]),
                                 Email = rdr["Email"].ToString(),
-                                Senha = rdr["Senha"].ToString(), //PAREI POR AQUI
+                                Senha = rdr["Senha"].ToString(),
                             };
                         }
                     }
                 }
             }
+            return usuario;
         }
     }
 }

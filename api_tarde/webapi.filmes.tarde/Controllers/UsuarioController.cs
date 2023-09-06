@@ -70,7 +70,7 @@ namespace webapi.filmes.tarde.Controllers
                         //credenciais do token
                         signingCredentials: creds
                     );
-
+                    
                 return Ok(new 
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token)
