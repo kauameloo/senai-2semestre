@@ -12,7 +12,7 @@ using webapi.inlock.codefirst.Contexts;
 namespace webapi.inlock.codefirst.Migrations
 {
     [DbContext(typeof(InlockContext))]
-    [Migration("20230914175202_BD")]
+    [Migration("20230915181935_BD")]
     partial class BD
     {
         /// <inheritdoc />
