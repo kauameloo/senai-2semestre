@@ -15,18 +15,39 @@ namespace webapi.event_.tarde.Repositories
         }
 
 
-        public void Atualizar(Guid id, Usuario uuario)
+        public void Atualizar(Guid id, Usuario usuario)
         {
-            throw new NotImplementedException();
+            Usuario usuarioBuscado = ctx.Usuario.Find(id);
+
+            if (usuario != null)
+            {
+                usuarioBuscado.NomeUsuario = usuario.NomeUsuario;
+            }
+
+            ctx.Usuario.Update(usuarioBuscado!);
+            ctx.SaveChanges();
         }
 
         public Usuario BuscarPorEmailESenha(string email, string senha)
         {
             try
             {
-                Usuario usuarioBuscado = ctx.Usuario.FirstOrDefault(u => u.Email == email)!;
+                Usuario usuarioBuscado = ctx.Usuario
+                                     .Select(u => new Usuario
+                                     {
+                                         IdUsuario = u.IdUsuario,
+                                         NomeUsuario = u.NomeUsuario,
+                                         Email = u.Email,
+                                         Senha = u.Senha,
 
-                    if (usuarioBuscado != null)
+                                         TipoUsuario = new TipoUsuario
+                                         {
+                                             IdTipoUsuario = u.IdTipoUsuario,
+                                             Titulo = u.TipoUsuario.Titulo
+                                         }
+                                     }).FirstOrDefault(u => u.Email == email)!;
+
+                if (usuarioBuscado != null)
                 {
                     bool confere = Criptografia.CompararHash(senha, usuarioBuscado.Senha!);
 
@@ -75,6 +96,7 @@ namespace webapi.event_.tarde.Repositories
         {
             try
             {
+                usuario.Senha = Criptografia.GerarHash(usuario.Senha);
                 ctx.Usuario.Add(usuario);
 
                 ctx.SaveChanges();
@@ -87,12 +109,19 @@ namespace webapi.event_.tarde.Repositories
 
         public void Deletar(Guid id)
         {
-            throw new NotImplementedException();
+            Usuario usuarioBuscado = ctx.Usuario.Find(id);
+
+            if (usuarioBuscado != null)
+            {
+                ctx.Usuario.Remove(usuarioBuscado);
+            }
+
+            ctx.SaveChanges();
         }
 
         public List<Usuario> Listar()
         {
-            throw new NotImplementedException();
+            return ctx.Usuario.ToList();
         }
     }
 }

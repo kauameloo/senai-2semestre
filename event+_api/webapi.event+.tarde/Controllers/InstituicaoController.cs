@@ -8,21 +8,21 @@ namespace webapi.event_.tarde.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TipoUsuarioController : ControllerBase
+    public class InstituicaoController : ControllerBase
     {
-        private ITipoUsuarioRepository _tipoUsuarioRepository { get; set; }
+        private IInstituicaoRepository _instituicaoRepository { get; set; }
 
-        public TipoUsuarioController()
+        public InstituicaoController()
         {
-            _tipoUsuarioRepository = new TipoUsuarioRepository();
+            _instituicaoRepository = new InstituicaoRepository();
         }
 
         [HttpPost]
-        public IActionResult Post(TipoUsuario tipoUsuario)
+        public IActionResult Post(Instituicao instituicao)
         {
             try
             {
-                _tipoUsuarioRepository.Cadastrar(tipoUsuario);
+                _instituicaoRepository.Cadastrar(instituicao);
 
                 return StatusCode(201);
             }
@@ -37,7 +37,7 @@ namespace webapi.event_.tarde.Controllers
         {
             try
             {
-                _tipoUsuarioRepository.Deletar(id);
+                _instituicaoRepository.Deletar(id);
                 return NoContent();
             }
             catch (Exception e)
@@ -52,7 +52,7 @@ namespace webapi.event_.tarde.Controllers
             try
             {
 
-                return Ok(_tipoUsuarioRepository.Listar());
+                return Ok(_instituicaoRepository.Listar());
             }
             catch (Exception erro)
             {

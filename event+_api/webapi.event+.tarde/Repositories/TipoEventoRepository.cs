@@ -4,20 +4,21 @@ using webapi.event_.tarde.Interfaces;
 
 namespace webapi.event_.tarde.Repositories
 {
-    public class TipoUsuarioRepository : ITipoUsuarioRepository
+    public class TipoEventoRepository : ITipoEventoRepository
     {
+
         private readonly EventContext ctx;
 
-        public TipoUsuarioRepository()
+        public TipoEventoRepository()
         {
             ctx = new EventContext();
         }
 
-        public void Cadastrar(TipoUsuario tipoUsuario)
+        public void Cadastrar(TipoEvento tipoEvento)
         {
             try
             {
-                ctx.TipoUsuario.Add(tipoUsuario);
+                ctx.TipoEvento.Add(tipoEvento);
 
                 ctx.SaveChanges();
             }
@@ -29,19 +30,19 @@ namespace webapi.event_.tarde.Repositories
 
         public void Deletar(Guid id)
         {
-            TipoUsuario tipoUsuario = ctx.TipoUsuario.Find(id);
+            TipoEvento tipoEvento = ctx.TipoEvento.Find(id);
 
-            if (tipoUsuario != null)
+            if (tipoEvento != null)
             {
-                ctx.TipoUsuario.Remove(tipoUsuario);
+                ctx.TipoEvento.Remove(tipoEvento);
             }
 
             ctx.SaveChanges();
         }
 
-        public List<TipoUsuario> Listar()
+        public List<TipoEvento> Listar()
         {
-            return ctx.TipoUsuario.ToList();
+            return ctx.TipoEvento.ToList();
         }
     }
 }

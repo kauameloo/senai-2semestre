@@ -8,22 +8,21 @@ namespace webapi.event_.tarde.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Produces("application/json")]
-    public class UsuarioController : ControllerBase
+    public class EventoController : ControllerBase
     {
-        private IUsuarioRepository _usuarioRepository { get; set; }
+        private IEventoRepository _eventoRepository { get; set; }
 
-        public UsuarioController()
+        public EventoController()
         {
-            _usuarioRepository = new UsuarioRepository();
+            _eventoRepository = new EventoRepository();
         }
 
         [HttpPost]
-        public IActionResult Post(Usuario usuario)
+        public IActionResult Post(Evento evento)
         {
             try
             {
-                _usuarioRepository.Cadastrar(usuario);
+                _eventoRepository.Cadastrar(evento);
 
                 return StatusCode(201);
             }
@@ -38,7 +37,7 @@ namespace webapi.event_.tarde.Controllers
         {
             try
             {
-                _usuarioRepository.Deletar(id);
+                _eventoRepository.Deletar(id);
                 return NoContent();
             }
             catch (Exception e)
@@ -53,7 +52,7 @@ namespace webapi.event_.tarde.Controllers
             try
             {
 
-                return Ok(_usuarioRepository.Listar());
+                return Ok(_eventoRepository.Listar());
             }
             catch (Exception erro)
             {
@@ -67,7 +66,7 @@ namespace webapi.event_.tarde.Controllers
         {
             try
             {
-                return Ok(_usuarioRepository.BuscarPorId(id));
+                return Ok(_eventoRepository.BuscarPorId(id));
             }
             catch (Exception e)
             {
@@ -76,11 +75,11 @@ namespace webapi.event_.tarde.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(Guid id, Usuario usuario)
+        public IActionResult Put(Guid id, Evento evento)
         {
             try
             {
-                _usuarioRepository.Atualizar(id, usuario);
+                _eventoRepository.Atualizar(id, evento);
                 return NoContent();
             }
             catch (Exception e)

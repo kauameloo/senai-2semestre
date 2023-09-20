@@ -2,13 +2,14 @@
 
 namespace webapi.event_.tarde.Interfaces
 {
-    public interface ITipoUsuarioRepository
+    public interface IInstituicaoRepository
     {
-        void Cadastrar(TipoUsuario tipoUsuario);
+        void Cadastrar(Instituicao instituicao);
 
         void Deletar(Guid id);
 
-        List<TipoUsuario> Listar();
+        List<Instituicao> Listar();
+
 
     }
 }

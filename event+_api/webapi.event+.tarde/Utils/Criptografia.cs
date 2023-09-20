@@ -1,6 +1,6 @@
 ﻿namespace webapi.event_.tarde.Utils
 {
-    public class Criptografia
+    public static class Criptografia
     {
         public static string GerarHash(string senha)
         {
