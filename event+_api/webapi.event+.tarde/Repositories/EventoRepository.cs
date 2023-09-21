@@ -52,7 +52,9 @@ namespace webapi.event_.tarde.Repositories
                         Instituicao = new Instituicao
                         {
                             IdInstituicao = u.IdInstituicao,
-                            NomeFantasia = u.Instituicao.NomeFantasia
+                            NomeFantasia = u.Instituicao.NomeFantasia,
+                            CNPJ = u.Instituicao.CNPJ,
+                            Endereco = u.Instituicao.Endereco
                         }
                     }).FirstOrDefault(u => u.IdEvento == id)!;
 
