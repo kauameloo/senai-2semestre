@@ -88,5 +88,19 @@ namespace webapi.event_.tarde.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpGet("PresencaUsuario")]
+        public IActionResult GetMinhas(Guid id)
+        {
+            try
+            {
+                List<PresencaEvento> p = _presencaEventoRepository.ListarMinhas(id);
+                return Ok(p);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

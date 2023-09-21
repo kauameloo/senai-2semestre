@@ -87,7 +87,18 @@ namespace webapi.event_.tarde.Repositories
 
         public List<PresencaEvento> ListarMinhas(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                List<PresencaEvento> presencaEvento = ctx.PresencaEvento.Where(x => x.IdUsuario == id).ToList();
+                return presencaEvento;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+
         }
     }
 }
