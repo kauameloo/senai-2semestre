@@ -11,7 +11,7 @@ namespace webapi.healthclinic.tarde.Domains
 
         [Column(TypeName = "VARCHAR(100)")]
         [Required(ErrorMessage = "Nome Usuario obrigatório!")]
-        public string? NomeUsuario { get; set; }
+        public string? Nome { get; set; }
 
         [Column(TypeName = "VARCHAR(100)")]
         [Required(ErrorMessage = "Email obrigatório!")]
