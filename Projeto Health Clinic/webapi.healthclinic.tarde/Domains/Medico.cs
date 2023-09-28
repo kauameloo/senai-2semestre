@@ -9,10 +9,9 @@ namespace webapi.healthclinic.tarde.Domains
         [Key]
         public Guid IdMedico { get; set; } = Guid.NewGuid();
 
-        [Column(TypeName = "INT")]
-        [StringLength(6, MinimumLength = 6, ErrorMessage = "O CRM deve conter 6 caracteres")]
+        [Column(TypeName = "CHAR(6)")]
         [Required(ErrorMessage = "CRM obrigatório!")]
-        public int? CRM { get; set; }
+        public string? CRM { get; set; }
 
         [Required(ErrorMessage = "Id do Usuario obrigatório!")]
         public Guid IdUsuario { get; set; }

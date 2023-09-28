@@ -12,7 +12,7 @@ using webapi.healthclinic.tarde.Contexts;
 namespace webapi.healthclinic.tarde.Migrations
 {
     [DbContext(typeof(HealthContext))]
-    [Migration("20230926201313_BD")]
+    [Migration("20230928202044_BD")]
     partial class BD
     {
         /// <inheritdoc />
@@ -31,10 +31,9 @@ namespace webapi.healthclinic.tarde.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("CNPJ")
+                    b.Property<string>("CNPJ")
                         .IsRequired()
-                        .HasMaxLength(14)
-                        .HasColumnType("INT");
+                        .HasColumnType("CHAR(14)");
 
                     b.Property<string>("Endereco")
                         .IsRequired()
@@ -115,10 +114,9 @@ namespace webapi.healthclinic.tarde.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("CRM")
+                    b.Property<string>("CRM")
                         .IsRequired()
-                        .HasMaxLength(6)
-                        .HasColumnType("INT");
+                        .HasColumnType("CHAR(6)");
 
                     b.Property<Guid>("IdEspecialidade")
                         .HasColumnType("uniqueidentifier");
@@ -141,10 +139,9 @@ namespace webapi.healthclinic.tarde.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("CPF")
+                    b.Property<string>("CPF")
                         .IsRequired()
-                        .HasMaxLength(11)
-                        .HasColumnType("INT");
+                        .HasColumnType("CHAR(11)");
 
                     b.Property<Guid>("IdUsuario")
                         .HasColumnType("uniqueidentifier");

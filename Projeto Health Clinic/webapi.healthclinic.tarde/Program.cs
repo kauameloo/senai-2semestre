@@ -1,11 +1,18 @@
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using webapi.healthclinic.tarde.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+//Add TimeSpanConverter
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new TimeSpanConverter());
+});
 
 //Adiciona serviço de autenticação JWT Bearer
 builder.Services.AddAuthentication(Options =>

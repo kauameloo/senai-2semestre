@@ -17,7 +17,7 @@ namespace webapi.healthclinic.tarde.Migrations
                 {
                     IdClinica = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     NomeFantasia = table.Column<string>(type: "VARCHAR(100)", nullable: false),
-                    CNPJ = table.Column<int>(type: "INT", maxLength: 14, nullable: false),
+                    CNPJ = table.Column<string>(type: "CHAR(14)", nullable: false),
                     Endereco = table.Column<string>(type: "VARCHAR(100)", nullable: false),
                     RazaoSocial = table.Column<string>(type: "VARCHAR(100)", nullable: false),
                     HoraAbertura = table.Column<TimeSpan>(type: "TIME", nullable: false),
@@ -70,7 +70,7 @@ namespace webapi.healthclinic.tarde.Migrations
                         column: x => x.IdTipoUsuario,
                         principalTable: "TipoUsuario",
                         principalColumn: "IdTipoUsuario",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -78,7 +78,7 @@ namespace webapi.healthclinic.tarde.Migrations
                 columns: table => new
                 {
                     IdMedico = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CRM = table.Column<int>(type: "INT", maxLength: 6, nullable: false),
+                    CRM = table.Column<string>(type: "CHAR(6)", nullable: false),
                     IdUsuario = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdEspecialidade = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
@@ -90,13 +90,13 @@ namespace webapi.healthclinic.tarde.Migrations
                         column: x => x.IdEspecialidade,
                         principalTable: "Especialidade",
                         principalColumn: "IdEspecialidade",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Medico_Usuario_IdUsuario",
                         column: x => x.IdUsuario,
                         principalTable: "Usuario",
                         principalColumn: "IdUsuario",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -104,7 +104,7 @@ namespace webapi.healthclinic.tarde.Migrations
                 columns: table => new
                 {
                     IdPaciente = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CPF = table.Column<int>(type: "INT", maxLength: 11, nullable: false),
+                    CPF = table.Column<string>(type: "CHAR(11)", nullable: false),
                     Idade = table.Column<string>(type: "VARCHAR(3)", nullable: false),
                     IdUsuario = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
@@ -116,7 +116,7 @@ namespace webapi.healthclinic.tarde.Migrations
                         column: x => x.IdUsuario,
                         principalTable: "Usuario",
                         principalColumn: "IdUsuario",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(

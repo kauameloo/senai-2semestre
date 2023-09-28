@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using webapi.healthclinic.tarde.Domains;
 using webapi.healthclinic.tarde.Interfaces;
@@ -18,6 +19,7 @@ namespace webapi.healthclinic.tarde.Controllers
         }
 
         [HttpPost]
+        [Authorize("Administrador")]
         public IActionResult Post(Consulta consulta)
         {
             try

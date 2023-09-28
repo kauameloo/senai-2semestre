@@ -13,10 +13,9 @@ namespace webapi.healthclinic.tarde.Domains
         [Required(ErrorMessage = "Nome Fantasia obrigatório!")]
         public string? NomeFantasia { get; set; }
 
-        [Column(TypeName = "INT")]
-        [StringLength(14, MinimumLength = 14, ErrorMessage = "O CNPJ deve conter 14 caracteres")]
+        [Column(TypeName = "CHAR(14)")]
         [Required(ErrorMessage = "CNPJ obrigatório!")]
-        public int? CNPJ { get; set; }
+        public string? CNPJ { get; set; }
 
         [Column(TypeName = "VARCHAR(100)")]
         [Required(ErrorMessage = "Endereco obrigatório!")]

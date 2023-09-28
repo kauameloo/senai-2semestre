@@ -71,7 +71,7 @@ namespace webapi.healthclinic.tarde.Repositories
 
         public void Deletar(Guid id)
         {
-            Clinica clinicaBuscada = ctx.Clinica.Find(id);
+            Clinica clinicaBuscada = ctx.Clinica.Find(id)!;
 
             if (clinicaBuscada != null)
             {
