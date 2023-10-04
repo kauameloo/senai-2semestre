@@ -19,7 +19,6 @@ namespace webapi.healthclinic.tarde.Controllers
         }
 
         [HttpPost]
-        [Authorize("Administrador")]
         public IActionResult Post(Consulta consulta)
         {
             try
