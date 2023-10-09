@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Simple Calc</h1>
+
+    <form>
+        <label for="numero1"> Primeiro Número</label>
+        <input type="number" id="numero1" placeholder="Primeiro Número">
+        <br><br>
+
+        <label for="numero2"> Segundo Número</label>
+        <input type="number" id="numero2" placeholder="Segundo Número">
+        <br><br>
+
+        <label for="operacao">Escolha o tipo de operação</label>
+
+        <select id="operacao">
+            <option value="">Selecione</option>
+            <option value="+">+</option>
+            <option value="/">/</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+        </select>
+
+        <button onclick="calcular()">Calcular</button>
+    </form>
+
+    <script>
+        function calcular() {
+            event.preventDefault();
+
+            let n1 = parseFloat(document.getElementById("numero1").value);
+            let n2 = parseFloat(document.getElementById("numero2").value);
+            let res;
+            let op = document.getElementById("operacao").value;
+
+            if (op == '+') {
+                res = somar(n1, n2)
+                console.log(`Resultado: ${somar(n1, n2)}`)
+                alert(`Resultado: ${res}`)
+            } else if (op == '-') {
+                res = subtrair(n1, n2);
+                console.log(`Resultado: ${subtrair(n1, n2)}`);
+                alert(`Resultado: ${res}`)
+            } else if (op == '/') {
+                res = dividir(n1, n2);
+                console.log(`Resultado: ${dividir(n1, n2)}`);
+                alert(`Resultado: ${res}`)
+            } else if (op == '*') {
+                res = multiplicar(n1, n2);
+                console.log(`Resultado: ${multiplicar(n1, n2)}`);
+                alert(`Resultado: ${res}`)
+            } else {
+                console.log("Selecione uma operação válida!");
+                alert("Selecione uma operação válida!")
+            }
+
+            console.log(n1);
+            console.log(n2);
+        }
+
+        function somar(x, y) {
+            return x + y
+        }
+        function subtrair(x, y) {
+            return x - y
+        }
+        function dividir(x, y) {
+            return x / y
+        }
+        function multiplicar(x, y) {
+            return x * y
+        }
+    </script>
+</body>
+
+</html>
