@@ -17,6 +17,9 @@
         <label>Nome de usuário</label>
         <input type="text" id="nome">
 
+        <label>Nickname</label>
+        <input type="text" id="nickname">
+
         <button>Run</button>
     </form>
 
@@ -25,8 +28,9 @@
         function exibir() {
             event.preventDefault();
 
-            let nick = document.getElementById("nome").value;
-            alert(`Nickname: ${nick.replace(nick ,"kzn")}`);
+            let name = document.getElementById("nome").value;
+            let nick = document.getElementById("nickname").value;
+            alert(`Nickname: ${name.replace(name, nick)}`);
         }
 
         // let nome = "Kauã de Melo Rodrigues";
