@@ -4,6 +4,7 @@ function calcular(event) {
 
     // CRIANDO O OBJETO PESSOA QUE VAI SER CADASTRADO
     let pessoa = {}
+    // let pessoa = new Object();
 
     pessoa.nome = document.getElementById("nome").value.trim();
     pessoa.altura = parseFloat(document.getElementById("altura").value);
@@ -22,26 +23,50 @@ function calcular(event) {
     // CRIANDO A LISTA DE PESSOAS E ADICIONANDO O OBJETO NELA
     let arrayPessoas = [];
     arrayPessoas.push(pessoa);
+        // // OPÇÃO DE CRIAR MÉTODO PARA SALVAR PESSOA
+        // pessoa.Lista = []
+        // pessoa.adicionarPessoa = function(pessoa) {
+        //     this.Lista.push(pessoa)
+        // }
 
-    // ADICIONANDO, NA TABELA HTML, A LISTA DE PESSOAS
+    // ADICIONANDO, NA TABELA HTML, A LISTA DE PESSOAS. MÉTODO UTILIZANDO FOR
     let tbody = document.getElementById("cadastro");
-    for (let i = 0; i < arrayPessoas.length; i++) {
-        let tr = tbody.insertRow();
+    // for (let i = 0; i < arrayPessoas.length; i++) {
+    //     let tr = tbody.insertRow();
 
-        // CRIANDO AS COLUNAS
-        let td_nome = tr.insertCell();
-        let td_altura = tr.insertCell();
-        let td_peso = tr.insertCell();
-        let td_imc = tr.insertCell();
-        let td_situacao = tr.insertCell();
+    //     // CRIANDO AS COLUNAS
+    //     let td_nome = tr.insertCell();
+    //     let td_altura = tr.insertCell();
+    //     let td_peso = tr.insertCell();
+    //     let td_imc = tr.insertCell();
+    //     let td_situacao = tr.insertCell();
 
-        // INSERINDO OS VALORES DE CADA PESSOA DA LISTA EM SUAS RESPECTIVAS COLUNAS
-        td_nome.innerText = arrayPessoas[i].nome.toUpperCase();
-        td_altura.innerText = arrayPessoas[i].altura;
-        td_peso.innerText = arrayPessoas[i].peso;
-        td_imc.innerText = arrayPessoas[i].imc;
-        td_situacao.innerText = arrayPessoas[i].situacao.toUpperCase();
-    }
+    //     // INSERINDO OS VALORES DE CADA PESSOA DA LISTA EM SUAS RESPECTIVAS COLUNAS
+    //     td_nome.innerText = arrayPessoas[i].nome.toUpperCase();
+    //     td_altura.innerText = arrayPessoas[i].altura;
+    //     td_peso.innerText = arrayPessoas[i].peso;
+    //     td_imc.innerText = arrayPessoas[i].imc;
+    //     td_situacao.innerText = arrayPessoas[i].situacao.toUpperCase();
+    // }
+
+        // MÉTODO DE ADICIONAR NA TABELA HTML PELO FOR EACH
+        arrayPessoas.forEach((p) => {
+            let tr = tbody.insertRow();
+
+            // CRIANDO AS COLUNAS
+            let td_nome = tr.insertCell();
+            let td_altura = tr.insertCell();
+            let td_peso = tr.insertCell();
+            let td_imc = tr.insertCell();
+            let td_situacao = tr.insertCell();
+    
+            // INSERINDO OS VALORES DE CADA PESSOA DA LISTA EM SUAS RESPECTIVAS COLUNAS
+            td_nome.innerText = p.nome.toUpperCase();
+            td_altura.innerText = p.altura;
+            td_peso.innerText = p.peso;
+            td_imc.innerText = p.imc;
+            td_situacao.innerText = p.situacao.toUpperCase();
+        });
 
 }
 
