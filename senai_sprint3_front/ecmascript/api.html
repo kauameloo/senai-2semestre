@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <label>CEP</label>
+    <input type="number" id="userCEP" placeholder="Insira seu CEP" onblur="chamarApi()">
+    <br /><br />
+
+    <label for="endereco">Endereço</label>
+    <input type="text" placeholder=" ... " id="endereco" />
+    <br /><br />
+
+    <label for="bairro">Bairro</label>
+    <input type="text" placeholder=" ... " id="bairro" />
+    <br /><br />
+
+    <label for="cidade">Cidade</label>
+    <input type="text" placeholder=" ... " id="cidade" />
+    <br /><br />
+
+    <label for="estado">Estado</label>
+    <input type="text" placeholder=" ... " id="estado" />
+    <br /><br />
+
+    <p>Resultado: <strong id="resultadoBusca"></strong></p>
+    <!-- <button onclick="chamarApi()">Buscar</button> -->
+
+
+
+    <script>
+
+        async function chamarApi() {
+            const userCEP = document.getElementById("userCEP").value;
+            const url = `https://viacep.com.br/ws/${userCEP}/json/`;
+
+            try { //resolvida ou fullfiled
+                const promise = await fetch(url)
+                const dados = await promise.json();
+
+                // RETORNA O OBJETO
+                console.log(dados);
+
+                // PENERA DE DADOS
+                // const {} = dados;
+
+                // EXIBIR RESULTADO PENERADO NO CONSOLE
+                // console.log(`
+                //     CEP: ${cep}
+                //     Rua: ${logradouro}
+                //     Bairro: ${bairro}
+                // `);
+
+                // // EXIBIR RESULTADO PENERADO NO HTML
+                // const res = (`
+                //     CEP: ${cep}
+                //     Rua: ${logradouro}
+                //     Bairro: ${bairro}
+                // `);
+
+                // document.getElementById('resultadoBusca').innerText = res;
+
+                // PREENCHER INPUTS COM DADOS DA API
+                document.getElementById("endereco").value = dados.logradouro;
+                document.getElementById("bairro").value = dados.bairro;
+                document.getElementById("cidade").value = dados.localidade;
+                document.getElementById("estado").value = dados.uf;
+
+            } catch (error) {
+                console.log("Erro na API");
+            }
+        }
+
+
+
+        // console.log(retorno);
+    </script>
+</body>
+
+</html>
