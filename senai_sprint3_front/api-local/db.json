@@ -1,0 +1,14 @@
+{
+  "contatos": [
+    {
+      "nome": "Kauã",
+      "telefone": "11913390707",
+      "cep": "09180070",
+      "endereco": "Rua Doutor Almenor Jardim Silveira",
+      "bairro": "Jardim Alvorada",
+      "cidade": "Santo André",
+      "estado": "SP",
+      "id": 1
+    }
+  ]
+}
