@@ -1,12 +1,13 @@
-import React from 'react';
+import React from "react";
+import "./Title.css";
 
-const Title = (props) => {
-    return (
-        <h1>
-            Title
-            <hr />
-        </h1>
-    );
+const Title = ({ titleText, additionalClass = "", color = "" }) => {
+  return (
+    <h1 className={`title ${additionalClass}`} style={{ color: color }}>
+      {titleText}
+      <hr className="title__underscore" style={{borderColor: color}} />
+    </h1>
+  );
 };
 
 export default Title;

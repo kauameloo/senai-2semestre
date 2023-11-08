@@ -40,7 +40,7 @@
 
 .exibeNavbar {
     left: 0 !important;
-    opacity: 1;
+    opacity: 1 !important;
 }
 
 /* link do logotipo */
