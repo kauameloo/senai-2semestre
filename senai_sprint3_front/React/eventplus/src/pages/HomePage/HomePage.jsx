@@ -7,6 +7,7 @@ import ContactSection from "../../components/ContactSection/ContactSection";
 import NextEvent from "../../components/NextEvent/NextEvent";
 import Container from "../../components/Container/Container"
 import axios from "axios";
+import api from "../../Services/Service";
 
 const HomePage = () => {
 
@@ -14,12 +15,12 @@ const HomePage = () => {
     //chamar a api
     async function getProximosEventos() {
       try {
-        const promise = await axios.get("https://localhost:7118/api/Evento/ListarProximos") 
+        const promise = await api.get("https://localhost:7118/api/Evento/ListarProximos") 
         
         console.log(promise.data);
         setNextEvents(promise.data)
       } catch (error) {
-        
+        alert("Deu ruim na API")
       }
     }
     getProximosEventos();
@@ -41,10 +42,10 @@ const HomePage = () => {
               nextEvents.map((e) => {
                 return (
                   <NextEvent
-                    key={e.id}
+                    key={e.idEvento}
                     title={e.nomeEvento}
                     description={e.descricao}
-                    eventDate={e.dataEvento}
+                    eventDate={e.dataEvento.replace("T00:00:00", "")}
                     idEvento={e.idEvento}
                   />
                 )

@@ -10,7 +10,7 @@
 }
 
 
-.tootip {
+.tooltip {
     color: #fff !important;
     background-color: #B51D44 !important;
   }
@@ -25,13 +25,13 @@
     border: 1px solid var(--color-blue-red);
     border-radius: 5px;
     overflow: auto;
-    transition: transform 0.3s;
+    /* transition: transform 0.3s; */
 }
 
-.event-card:hover , .event-card:focus {
+/* .event-card:hover , .event-card:focus {
   box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
   transform: translateY(-0.25em);
-}
+} */
 
 .event-card__title {
     text-align: center;
