@@ -14,16 +14,31 @@ export const Input = ({
     manipulationFunction
 }) => {
     return (
-        <input 
-        type={type}
-        id={id}
-        name={name}
-        value={value}
-        required={required}
-        className={`input-component ${additionalClass}`}
-        placeholder={placeholder}
-        onChange={manipulationFunction}
-        autoComplete='off'
+        <input
+            type={type}
+            id={id}
+            name={name}
+            value={value}
+            required={required}
+            className={`input-component ${additionalClass}`}
+            placeholder={placeholder}
+            onChange={manipulationFunction}
+            autoComplete='off'
         />
     );
+}
+
+export const Button = ({ textButton, id, name, type, additionalClass = '', manipulationFunction }) => {
+    return (
+        <button
+            type={type}
+            name={name}
+            id={id}
+            className={`button-component ${additionalClass}`}
+            onChange={manipulationFunction}
+
+        >
+            {textButton}
+        </button>
+    )
 }
