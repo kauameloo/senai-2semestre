@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Title from "./../../components/Title/Title";
 import MainContent from "./../../components/MainContent/MainContent";
 import "./TipoEventosPage.css"
@@ -8,22 +8,26 @@ import Container from "../../components/Container/Container";
 import { Input } from "../../components/FormComponents/FormComponents";
 import { Button } from "../../components/FormComponents/FormComponents";
 import api from '../../Services/Service'
+import TableTp from "./TableTp/TableTp";
 
 const TipoEventosPage = () => {
 
   const [frmEdit, setFrmEdit] = useState(false);
-    const [titulo, setTitulo] = useState("");
+  const [titulo, setTitulo] = useState("");
+  const [tipoEventos, setTipoEventos] = useState([
+  ]);
+
   async function handleSubmit(e) {
     //parar o submit do formulário
     e.preventDefault();
     // validar pelo menos 3 caracteres
-    if( titulo.trim().length < 3 ) {
+    if (titulo.trim().length < 3) {
       alert("O Título deve ter no mínimo 3 carácteres");
       return;
     }
     //chamar api
     try {
-      const retorno = await api.post('/TiposEvento', {titulo: titulo})
+      const retorno = await api.post('/TiposEvento', { titulo: titulo })
       console.log("CADASTRADO COM SUCESSO");
       console.log(retorno.data);
 
@@ -32,12 +36,41 @@ const TipoEventosPage = () => {
       console.log(error);
     }
   }
+
+  useEffect(() => {
+    async function getTitulos() {
+      try {
+        const promise = await api.get("/TiposEvento")
+        setTipoEventos(promise.data)
+      } catch (error) {
+        console.error("Erro ao carregar tipos de evento: " + error)        
+      }
+    }
+    
+    getTitulos()
+  }, [tipoEventos])
+
+  //ATUALIZAÇÃO DOS DADOS
+  function showUpdateForm() {
+    alert('Mostrando a tela de update')
+  }
+
   function handleUpdate() {
     alert("Bora atualizar")
   }
 
+  function editActionAbort() {
+    alert("Cancelar a tela de edição")
+  }
+
+
+  function handleDelete() {
+    alert('Bora lá apagar na api')
+  }
+
   return (
     <MainContent>
+      {/* Cadastro de tipo de eventos */}
       <section className="cadastro-evento-section">
         <Container>
           <div className="cadastro-evento__box">
@@ -47,9 +80,9 @@ const TipoEventosPage = () => {
               imageRender={eventTypeImage}
             />
 
-            <form 
-            className="ftipo-evento"
-            onSubmit={frmEdit ? handleUpdate : handleSubmit}>
+            <form
+              className="ftipo-evento"
+              onSubmit={frmEdit ? handleUpdate : handleSubmit}>
 
               {!frmEdit ?
                 (
@@ -68,10 +101,10 @@ const TipoEventosPage = () => {
                       }
                     />
                     <Button
-                    type={"submit"}
-                    name={"cadastrar"}
-                    id={"cadastrar"}
-                    textButton={"Cadastrar"}
+                      type={"submit"}
+                      name={"cadastrar"}
+                      id={"cadastrar"}
+                      textButton={"Cadastrar"}
                     />
                   </>
                 )
@@ -85,6 +118,19 @@ const TipoEventosPage = () => {
           </div>
         </Container>
       </section>
+
+      {/* Listagem de tipo de eventos */}
+      <section className="lista-eventos-section">
+        <Container>
+          <Title titleText={'Lista Tipo de Eventos'} color="white" />
+          <TableTp
+            dados={tipoEventos}
+            fnUpdate={showUpdateForm}
+            fnDelete={handleDelete}
+          />
+        </Container>
+      </section>
+
     </MainContent>
   );
 };
