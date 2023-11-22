@@ -1,5 +1,5 @@
 import React from "react";
-import "./TableTp.css";
+import "./TableEp.css";
 import iconeLixo from "../../../assets/images/trash-delete.svg";
 import iconeEditar from "../../../assets/images/edit-pen.svg";
 
@@ -21,10 +21,10 @@ const TableTp = ({ dados, fnUpdate, fnDelete }) => {
       </thead>
 
       <tbody>
-        {dados.map((tipoEvento) => (
+        {dados.map((evento) => (
           <tr className="table-data__head-row">
             <td className="table-data__data table-data__data--big">
-              {tipoEvento.titulo}
+              {evento.nomeEvento}
             </td>
 
             <td className="table-data__data table-data__data--little">
@@ -32,7 +32,7 @@ const TableTp = ({ dados, fnUpdate, fnDelete }) => {
                 className="table-data__icon"
                 src={iconeEditar}
                 alt="Ícone de lixeira para deletar"
-                onClick={() => fnUpdate(tipoEvento)}
+                onClick={() => fnUpdate(evento)}
               />
             </td>
 
@@ -41,7 +41,7 @@ const TableTp = ({ dados, fnUpdate, fnDelete }) => {
                 className="table-data__icon"
                 src={iconeLixo}
                 alt="Ícone de caneta para editar"
-                onClick={() => fnDelete(tipoEvento.idTipoEvento)}
+                onClick={() => fnDelete(evento.idTipoEvento)}
               />
             </td>
           </tr>
