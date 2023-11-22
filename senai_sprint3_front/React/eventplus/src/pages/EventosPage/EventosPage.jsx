@@ -52,7 +52,7 @@ const EventosPage = () => {
     }
     //chamar a api
     try {
-      const promise = await api.post("/Evento", { nomeEvento: nomeEvento, descricao: descricao, idTipoEvento: idTipoEvento, idInstituicao: idInstituicao, dataEvento: dataEvento });
+      const promise = await api.post("https://localhost:7118/api/Evento", { nomeEvento: nomeEvento, descricao: descricao, idTipoEvento: idTipoEvento, idInstituicao: idInstituicao, dataEvento: dataEvento });
       setNotifyUser({
         titleNote: "Sucesso",
         textNote: `Cadastrado com sucesso!`,
@@ -67,6 +67,10 @@ const EventosPage = () => {
 
     //limpar o formulário
     setTitulo("");
+    setDescricao("");
+    setDataEvento("");
+    setIdTipoEvento("");
+    setIdInstituicao("");
     setShowSpinner(false);
   }
 
@@ -120,21 +124,23 @@ const EventosPage = () => {
     setFrmEdit(false);
   }
 
+  async function getEvento() {
+    setShowSpinner(true);
+    try {
+      const promise = await api.get("https://localhost:7118/api/Evento");
+      setEvento(promise.data);
+    } catch (error) {
+      console.log("Erro ao carregar eventos: " + error);
+    }
+    setShowSpinner(false);
+  }
+
   useEffect(() => {
     //chamar a api
-    async function getEvento() {
-      setShowSpinner(true);
-      try {
-        const promise = await api.get("https://localhost:7118/api/Evento");
-        setEvento(promise.data);
-      } catch (error) {
-        console.log("Erro ao carregar eventos: " + error);
-      }
-      setShowSpinner(false);
-    }
+    
 
     getEvento();
-  }, [evento]);
+  }, []);
 
   useEffect(() => {
     //chamar a api
@@ -150,7 +156,7 @@ const EventosPage = () => {
     }
 
     getTitulos();
-  }, [tiposEvento]);
+  }, []);
 
   useEffect(() => {
     //chamar a api
@@ -166,13 +172,15 @@ const EventosPage = () => {
     }
 
     getInstituicao();
-  }, [instituicao]);
+  }, []);
 
   async function handleDelete(id) {
     setShowSpinner(true);
     try {
       evento.filter((evento) => evento.idEvento === id);
       const promise = await api.delete(`/Evento/${id}`);
+      getEvento()
+
       setNotifyUser({
         titleNote: "Sucesso",
         textNote: `Deletado com sucesso!`,
