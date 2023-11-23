@@ -4,7 +4,7 @@ import iconeLixo from "../../../assets/images/trash-delete.svg";
 import iconeEditar from "../../../assets/images/edit-pen.svg";
 import dateFormatDbToView from "../../../Utils/stringFunction";
 
-const TableTp = ({ dados, fnUpdate, fnDelete }) => {
+const TableEp = ({ dados, fnUpdate, fnDelete }) => {
   return (
     <table className="table-data">
       <thead className="table-data__head">
@@ -32,7 +32,7 @@ const TableTp = ({ dados, fnUpdate, fnDelete }) => {
 
       <tbody>
         {dados.map((evento) => (
-          <tr className="table-data__head-row">
+          <tr key={evento.idEvento} className="table-data__head-row">
             <td className="table-data__data table-data__data--big">
               {evento.nomeEvento}
             </td>
@@ -70,4 +70,4 @@ const TableTp = ({ dados, fnUpdate, fnDelete }) => {
   );
 };
 
-export default TableTp;
+export default TableEp;
