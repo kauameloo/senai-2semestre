@@ -29,6 +29,24 @@ const TipoEventosPage = () => {
 
   const [showSpinner, setShowSpinner] = useState(false);
 
+
+
+  //chamar a api
+  async function getTitulos() {
+    setShowSpinner(true);
+    try {
+      const promise = await api.get("https://localhost:7118/api/TiposEvento");
+      setTiposEvento(promise.data);
+    } catch (error) {
+      console.log("Erro ao carregar tipos de evento: " + error);
+    }
+    setShowSpinner(false);
+  }
+  useEffect(() => {
+
+    getTitulos();
+  }, []);
+
   //CADASTRAR TIPO DE EVENTO
 
   async function handleSubmit(e) {
@@ -51,7 +69,8 @@ const TipoEventosPage = () => {
     }
     //chamar a api
     try {
-      const promise = await api.post("/TiposEvento", { titulo: titulo });
+      const promise = await api.post("https://localhost:7118/api/TiposEvento", { titulo: titulo });
+      getTitulos();
       setNotifyUser({
         titleNote: "Sucesso",
         textNote: `Cadastrado com sucesso!`,
@@ -95,9 +114,10 @@ const TipoEventosPage = () => {
     }
 
     try {
-      const promise = await api.put(`/TiposEvento/${idTipoEvento}`, {
+      const promise = await api.put(`https://localhost:7118/api/TiposEvento/${idTipoEvento}`, {
         titulo,
       });
+      getTitulos();
       setNotifyUser({
         titleNote: "Sucesso",
         textNote: `Atualizado com sucesso!`,
@@ -119,27 +139,12 @@ const TipoEventosPage = () => {
     setFrmEdit(false);
   }
 
-  useEffect(() => {
-    //chamar a api
-    async function getTitulos() {
-      setShowSpinner(true);
-      try {
-        const promise = await api.get("https://localhost:7118/api/TiposEvento");
-        setTiposEvento(promise.data);
-      } catch (error) {
-        console.log("Erro ao carregar tipos de evento: " + error);
-      }
-      setShowSpinner(false) ;
-    }
-    
-    getTitulos();
-  }, [tiposEvento]);
-
   async function handleDelete(id) {
     setShowSpinner(true);
     try {
       tiposEvento.filter((tipoEvento) => tipoEvento.idTipoEvento === id);
-      const promise = await api.delete(`/TiposEvento/${id}`);
+      const promise = await api.delete(`https://localhost:7118/api/TiposEvento/${id}`);
+      getTitulos();
       setNotifyUser({
         titleNote: "Sucesso",
         textNote: `Deletado com sucesso!`,

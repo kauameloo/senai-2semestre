@@ -20,6 +20,7 @@ const EventosPage = () => {
   const [dataEvento, setDataEvento] = useState("");
   const [idTipoEvento, setIdTipoEvento] = useState("");
   const [idInstituicao, setIdInstituicao] = useState("");
+  const [instituicaoPadrao, setInstituicaoPadrao] = useState("");
 
   const [evento, setEvento] = useState([]);
   const [tiposEvento, setTiposEvento] = useState([]);
@@ -31,7 +32,62 @@ const EventosPage = () => {
 
   const [showSpinner, setShowSpinner] = useState(false);
 
-  //CADASTRAR TIPO DE EVENTO
+
+
+  //chamar a api
+  async function getTitulos() {
+    setShowSpinner(true);
+    try {
+      const promise = await api.get("https://localhost:7118/api/TiposEvento");
+      setTiposEvento(promise.data);
+    } catch (error) {
+      console.log("Erro ao carregar tipos de evento: " + error);
+    }
+    setShowSpinner(false);
+  }
+
+
+
+
+
+  //chamar a api
+  async function getInstituicao() {
+    setShowSpinner(true);
+    try {
+      const promise = await api.get("https://localhost:7118/api/Instituicao");
+      const dadosInstituicao = promise.data;
+
+      // PEGAR O PRIMEIRO VALOR DA ARRAY DE INSTITUIÇÃO
+      setInstituicaoPadrao(dadosInstituicao[0].idInstituicao);
+      //
+
+      setInstituicao(dadosInstituicao);
+    } catch (error) {
+      console.log("Erro ao carregar instituições: " + error);
+    }
+    setShowSpinner(false);
+  }
+
+
+
+  async function getEvento() {
+    setShowSpinner(true);
+    try {
+      const promise = await api.get("https://localhost:7118/api/Evento");
+      setEvento(promise.data);
+    } catch (error) {
+      console.log("Erro ao carregar eventos: " + error);
+    }
+    setShowSpinner(false);
+  }
+  useEffect(() => {
+    //chamar a api
+    getInstituicao();
+    getTitulos();
+    getEvento();
+  }, []);
+
+  //CADASTRAR EVENTO
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -54,6 +110,7 @@ const EventosPage = () => {
     //chamar a api
     try {
       const promise = await api.post("https://localhost:7118/api/Evento", { nomeEvento: nomeEvento, descricao: descricao, idTipoEvento: idTipoEvento, idInstituicao: idInstituicao, dataEvento: dataEvento });
+      getEvento();
       setNotifyUser({
         titleNote: "Sucesso",
         textNote: `Cadastrado com sucesso!`,
@@ -88,6 +145,8 @@ const EventosPage = () => {
     setIdEvento(evento.idEvento);
   }
 
+
+  // ATUALIZAR EVENTO
   async function handleUpdate(e) {
     e.preventDefault();
     setShowSpinner(true);
@@ -106,9 +165,9 @@ const EventosPage = () => {
 
     try {
       const promise = await api.put(`https://localhost:7118/api/Evento/${idEvento}`, {
-        nomeEvento, descricao, idTipoEvento, idInstituicao, dataEvento,
+        nomeEvento: nomeEvento, descricao: descricao, idTipoEvento: idTipoEvento, idInstituicao: idInstituicao, dataEvento: dataEvento
       });
-      setEvento(promise.data);
+      getEvento();
       setNotifyUser({
         titleNote: "Sucesso",
         textNote: `Atualizado com sucesso!`,
@@ -141,61 +200,13 @@ const EventosPage = () => {
   }
 
 
-
-  useEffect(() => {
-    //chamar a api
-    async function getEvento() {
-      setShowSpinner(true);
-      try {
-        const promise = await api.get("https://localhost:7118/api/Evento");
-        setEvento(promise.data);
-      } catch (error) {
-        console.log("Erro ao carregar eventos: " + error);
-      }
-      setShowSpinner(false);
-    }
-
-    getEvento();
-  }, [evento]);
-
-  useEffect(() => {
-    //chamar a api
-    async function getTitulos() {
-      setShowSpinner(true);
-      try {
-        const promise = await api.get("https://localhost:7118/api/TiposEvento");
-        setTiposEvento(promise.data);
-      } catch (error) {
-        console.log("Erro ao carregar tipos de evento: " + error);
-      }
-      setShowSpinner(false);
-    }
-
-    getTitulos();
-  }, []);
-
-  useEffect(() => {
-    //chamar a api
-    async function getInstituicao() {
-      setShowSpinner(true);
-      try {
-        const promise = await api.get("https://localhost:7118/api/Instituicao");
-        setInstituicao(promise.data);
-      } catch (error) {
-        console.log("Erro ao carregar instituições: " + error);
-      }
-      setShowSpinner(false);
-    }
-
-    getInstituicao();
-  }, []);
-
+  // DELETAR EVENTO
   async function handleDelete(id) {
     setShowSpinner(true);
     try {
       evento.filter((evento) => evento.idEvento === id);
-      const promise = await api.delete(`/Evento/${id}`);
-
+      const promise = await api.delete(`https://localhost:7118/api/Evento/${id}`);
+      getEvento();
       setNotifyUser({
         titleNote: "Sucesso",
         textNote: `Deletado com sucesso!`,
@@ -269,7 +280,6 @@ const EventosPage = () => {
                     dados={tiposEvento}
                     id="idTipoEvento"
                     placeholder="Tipo do Evento"
-                    type="number"
                     name="idTipoEvento"
                     value={idTipoEvento}
                     required

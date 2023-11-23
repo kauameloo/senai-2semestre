@@ -60,7 +60,7 @@ const TableEp = ({ dados, fnUpdate, fnDelete }) => {
                 className="table-data__icon"
                 src={iconeLixo}
                 alt="Ícone de caneta para editar"
-                onClick={() => fnDelete(evento.idTipoEvento)}
+                onClick={() => fnDelete(evento.idEvento)}
               />
             </td>
           </tr>

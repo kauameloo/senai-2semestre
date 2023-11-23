@@ -47,7 +47,7 @@ const HomePage = () => {
 
           <div className="events-box">
             <Swiper
-              slidesPerView={2}
+              slidesPerView={3}
               pagination={{
                 dynamicBullets: true,
               }}
