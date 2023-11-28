@@ -1,5 +1,12 @@
 .App {
   text-align: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.App-dark {
+  background-color: rgb(38, 38, 38);
+  color: white;
 }
 
 .App-logo {

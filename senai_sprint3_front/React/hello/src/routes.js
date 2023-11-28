@@ -9,7 +9,6 @@ import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import MeusPedidosPage from "./pages/MeusPedidosPage/MeusPedidosPage";
 import ImportantePage from "./pages/ImportantePage/ImportantePage";
 import Nav from "./components/Nav/Nav";
-import { ThemeContext } from "./context/ThemeContext";
 
 // Testar as Rotas
 // Context API
@@ -17,11 +16,10 @@ import { ThemeContext } from "./context/ThemeContext";
 // Login em si
 
 const Rotas = () => {
-  const [theme, setTheme] = useState("light")
+
   return (
     <BrowserRouter>
       <Nav/>
-      <ThemeContext.Provider value={{ theme, setTheme }}>
         <Routes>
           <Route element={<HomePage />} path={"/"} exact />
           <Route element={<ProdutoPage />} path={"/produtos"} />
@@ -30,7 +28,6 @@ const Rotas = () => {
           <Route element={<LoginPage />} path={"/login"} />
           <Route element={<NotFoundPage />} path={"*"} />
         </Routes>
-        </ThemeContext.Provider>
     </BrowserRouter>
   );
 };
