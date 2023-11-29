@@ -12,7 +12,7 @@ import { useState } from "react";
 function App() {
   // Criar as propriedades titulo, texto, textoLink
   // passar as propriedades em cada um dios 3 componentes abaixo.
-  const [theme, setTheme] = useState('light')
+  const [theme, setTheme] = useState(localStorage.getItem("theme"))
   const produtos = [
     {
       idProduto: Math.random(),
@@ -35,7 +35,7 @@ function App() {
   ]
   return (
     <ThemeContext.Provider value={{theme, setTheme, produtos}}>
-    <div className={`App ${theme === 'dark' ? 'App-dark' : ''}`}>
+    <div className={`App ${localStorage.getItem("theme") === 'dark' ? 'App-dark' : ''}`}>
       <Rotas />
     </div>
     </ThemeContext.Provider>
