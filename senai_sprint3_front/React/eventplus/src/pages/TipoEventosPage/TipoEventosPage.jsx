@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Title from "./../../components/Title/Title";
 import MainContent from "./../../components/MainContent/MainContent";
-import "./TipoEventosPage.css";
 import ImageIllustrator from "../../components/ImageIllustrator/ImageIllustrator";
 import Notification from "../../components/Notification/Notification";
 
@@ -13,7 +12,7 @@ import Spinner from "../../components/Spinner/Spinner";
 import { Input, Button } from "../../components/FormComponents/FormComponents";
 
 import api from "../../Services/Service";
-import axios from "axios";
+import "./TipoEventosPage.css";
 
 const TipoEventosPage = () => {
   //
@@ -27,24 +26,24 @@ const TipoEventosPage = () => {
 
   const [notifyUser, setNotifyUser] = useState({});
 
-  const [showSpinner, setShowSpinner] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(true);
 
-
-
-  //chamar a api
-  async function getTitulos() {
+  //METODO PARA LISTAR EVENTOS
+  async function getTiposEventos() {
     setShowSpinner(true);
     try {
       const promise = await api.get("https://localhost:7118/api/TiposEvento");
       setTiposEvento(promise.data);
     } catch (error) {
-      console.log("Erro ao carregar tipos de evento: " + error);
+      console.error("Erro ao carregar tipos de evento: " + error);
     }
     setShowSpinner(false);
   }
-  useEffect(() => {
 
-    getTitulos();
+  //LISTAGEM DE TIPOS DE EVENTOS
+  useEffect(() => {
+    //chamar a api
+    getTiposEventos();
   }, []);
 
   //CADASTRAR TIPO DE EVENTO
@@ -69,8 +68,9 @@ const TipoEventosPage = () => {
     }
     //chamar a api
     try {
-      const promise = await api.post("https://localhost:7118/api/TiposEvento", { titulo: titulo });
-      getTitulos();
+      const promise = await api.post("https://localhost:7118/api/TiposEvento", { titulo });
+      console.log(promise.data);
+      getTiposEventos();
       setNotifyUser({
         titleNote: "Sucesso",
         textNote: `Cadastrado com sucesso!`,
@@ -93,10 +93,10 @@ const TipoEventosPage = () => {
   function showUpdateForm(tipoEvento) {
     setFrmEdit(true);
     setTitulo(tipoEvento.titulo);
-
+    window.scrollTo({ top: 0, behavior: "smooth" });
     setIdTipoEvento(tipoEvento.idTipoEvento);
   }
-
+  //ATUALIZAR TIPO DE EVENTO
   async function handleUpdate(e) {
     e.preventDefault();
     setShowSpinner(true);
@@ -117,7 +117,8 @@ const TipoEventosPage = () => {
       const promise = await api.put(`https://localhost:7118/api/TiposEvento/${idTipoEvento}`, {
         titulo,
       });
-      getTitulos();
+      console.log(promise.data);
+      getTiposEventos();
       setNotifyUser({
         titleNote: "Sucesso",
         textNote: `Atualizado com sucesso!`,
@@ -137,6 +138,7 @@ const TipoEventosPage = () => {
 
   function cancelUpdate() {
     setFrmEdit(false);
+    setTitulo("");
   }
 
   async function handleDelete(id) {
@@ -144,7 +146,8 @@ const TipoEventosPage = () => {
     try {
       tiposEvento.filter((tipoEvento) => tipoEvento.idTipoEvento === id);
       const promise = await api.delete(`https://localhost:7118/api/TiposEvento/${id}`);
-      getTitulos();
+      console.log(promise.data);
+      getTiposEventos();
       setNotifyUser({
         titleNote: "Sucesso",
         textNote: `Deletado com sucesso!`,
@@ -172,7 +175,10 @@ const TipoEventosPage = () => {
               additionalClass="margem-acima"
             />
 
-            <ImageIllustrator alterText="??????" imageRender={eventTypeImage} />
+            <ImageIllustrator
+              alterText="Homem e mulher interagindo com a tela de um computador"
+              imageRender={eventTypeImage}
+            />
 
             <form
               className="ftipo-evento"

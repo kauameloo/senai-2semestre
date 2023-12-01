@@ -1,10 +1,15 @@
-import { jwtDecode } from "jwt-decode";
 import { createContext } from "react";
+import { jwtDecode } from "jwt-decode";
 
-export const UserContext = createContext(null);
+export const userContext = createContext(null);
 
 export const userDecodeToken = (theToken) => {
-    const decoded = jwtDecode(theToken); //aqui retorna o payload
+  const decoded = jwtDecode(theToken); //aqui retorna o payload do token
 
-    return { role: decoded.role, name: decoded.name, userId: decoded.jti, token: theToken }
-}
+  return {
+    role: decoded.role,
+    name: decoded.name,
+    userId: decoded.jti,
+    token: theToken,
+  };
+};

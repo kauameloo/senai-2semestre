@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import MainContent from "../../components/MainContent/MainContent";
 import Banner from "../../components/Banner/Banner";
 import VisionSection from "../../components/VisionSection/VisionSection";
@@ -8,7 +8,6 @@ import Title from "../../components/Title/Title";
 import Container from "../../components/Container/Container";
 import api from "../../Services/Service";
 
-
 // Importando Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
@@ -16,23 +15,24 @@ import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "./HomePage.css";
+import { userContext } from "../../context/AuthContext";
 
 const HomePage = () => {
+  const { userData } = useContext(userContext);
+  console.log(userData);
+
   useEffect(() => {
     //chamar a api
     async function getProximosEventos() {
       try {
         const promise = await api.get("https://localhost:7118/api/Evento/ListarProximos");
-        console.log(promise.data);
         setNextEvents(promise.data);
       } catch (error) {
         console.error("Erro : " + error);
         console.log("Erro ao carregar os eventos");
       }
     }
-
     getProximosEventos();
-    console.log("A HOME FOI MONTADA!");
   }, []);
 
   // fake mock - api mocada
@@ -47,25 +47,33 @@ const HomePage = () => {
 
           <div className="events-box">
             <Swiper
-              slidesPerView={3}
+              breakpoints={{
+                320: {
+                  slidesPerView: 1,
+                },
+                992: {
+                  slidesPerView: 3,
+                },
+              }}
+              spaceBetween={20}
               pagination={{
                 dynamicBullets: true,
+                clickable: true,
               }}
               modules={[Pagination]}
               className="mySwiper"
             >
-              {nextEvents.map((event) => (
-                <>
-                  <SwiperSlide>
-                    <NextEvent
-                      key={event.idEvento}
-                      title={event.nomeEvento}
-                      description={event.descricao}
-                      eventDate={event.dataEvento}
-                      idEvento={event.idEvento}
-                    />
-                  </SwiperSlide>
-                </>
+              {nextEvents.map((event, index) => (
+                <SwiperSlide key={index}>
+                  <NextEvent
+                    style={{ flex: 1 }}
+                    key={event.idEvento}
+                    title={event.nomeEvento}
+                    description={event.descricao}
+                    eventDate={event.dataEvento}
+                    idEvento={event.idEvento}
+                  />
+                </SwiperSlide>
               ))}
             </Swiper>
           </div>

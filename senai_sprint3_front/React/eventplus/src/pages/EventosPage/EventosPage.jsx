@@ -1,90 +1,80 @@
 import React, { useEffect, useState } from "react";
-import Title from "../../components/Title/Title";
-import MainContent from "../../components/MainContent/MainContent";
-import api from "../../Services/Service";
-import Spinner from "../../components/Spinner/Spinner";
-import Notification from "../../components/Notification/Notification";
-import { Input, Button, SelectTipo, SelectInst } from "../../components/FormComponents/FormComponents";
+import Title from "./../../components/Title/Title";
+import MainContent from "./../../components/MainContent/MainContent";
 import ImageIllustrator from "../../components/ImageIllustrator/ImageIllustrator";
+import Notification from "../../components/Notification/Notification";
 import Container from "../../components/Container/Container";
-import TableEp from "./TableEp/TableEp";
+import TableEventos from "./TableEventos/TableEventos";
 import eventImage from "../../assets/images/evento.svg";
-import dateFormatDbToView from "../../Utils/stringFunction";
+import Spinner from "../../components/Spinner/Spinner";
+import {
+  Input,
+  Button,
+  Select,
+} from "../../components/FormComponents/FormComponents";
+import api from "../../Services/Service";
 
+import "./EventosPage.css";
 const EventosPage = () => {
   //
   const [frmEdit, setFrmEdit] = useState(false);
 
-  const [nomeEvento, setTitulo] = useState("");
+  const [nomeEvento, setNomeEvento] = useState("");
   const [descricao, setDescricao] = useState("");
-  const [dataEvento, setDataEvento] = useState("");
   const [idTipoEvento, setIdTipoEvento] = useState("");
+  const [dataEvento, setDataEvento] = useState("");
   const [idInstituicao, setIdInstituicao] = useState("");
-  const [instituicaoPadrao, setInstituicaoPadrao] = useState("");
 
-  const [evento, setEvento] = useState([]);
+  const [eventos, setEventos] = useState([]);
   const [tiposEvento, setTiposEvento] = useState([]);
-  const [instituicao, setInstituicao] = useState([]);
+  const [instituicoes, setInstituicoes] = useState([]);
 
   const [idEvento, setIdEvento] = useState("");
 
   const [notifyUser, setNotifyUser] = useState({});
 
-  const [showSpinner, setShowSpinner] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(true);
 
+  //METODO PARA LISTAR EVENTOS
+  async function getEventos() {
+    setShowSpinner(true);
+    try {
+      const promise = await api.get("https://localhost:7118/api/Evento");
+      setEventos(promise.data);
+    } catch (error) {
+      console.error("Erro ao carregar eventos: " + error);
+    }
+    setShowSpinner(false);
+  }
 
-
-  //chamar a api
-  async function getTitulos() {
+  async function getTiposEvento() {
     setShowSpinner(true);
     try {
       const promise = await api.get("https://localhost:7118/api/TiposEvento");
       setTiposEvento(promise.data);
     } catch (error) {
-      console.log("Erro ao carregar tipos de evento: " + error);
+      console.error("Erro ao carregar tipos de eventos: " + error);
     }
     setShowSpinner(false);
   }
 
-
-
-
-
-  //chamar a api
-  async function getInstituicao() {
+  async function getInstituicoes() {
     setShowSpinner(true);
     try {
       const promise = await api.get("https://localhost:7118/api/Instituicao");
-      const dadosInstituicao = promise.data;
-
-      // PEGAR O PRIMEIRO VALOR DA ARRAY DE INSTITUIÇÃO
-      setInstituicaoPadrao(dadosInstituicao[0].idInstituicao);
-      //
-
-      setInstituicao(dadosInstituicao);
+      setInstituicoes(promise.data);
     } catch (error) {
-      console.log("Erro ao carregar instituições: " + error);
+      console.error("Erro ao carregar instituições: " + error);
     }
     setShowSpinner(false);
   }
 
-
-
-  async function getEvento() {
-    setShowSpinner(true);
-    try {
-      const promise = await api.get("https://localhost:7118/api/Evento");
-      setEvento(promise.data);
-    } catch (error) {
-      console.log("Erro ao carregar eventos: " + error);
-    }
-    setShowSpinner(false);
-  }
+  //LISTAGEM DE EVENTOS
   useEffect(() => {
     //chamar a api
-    getInstituicao();
-    getTitulos();
-    getEvento();
+    getEventos();
+    getTiposEvento();
+    getInstituicoes();
   }, []);
 
   //CADASTRAR EVENTO
@@ -109,8 +99,15 @@ const EventosPage = () => {
     }
     //chamar a api
     try {
-      const promise = await api.post("https://localhost:7118/api/Evento", { nomeEvento: nomeEvento, descricao: descricao, idTipoEvento: idTipoEvento, idInstituicao: idInstituicao, dataEvento: dataEvento });
-      getEvento();
+      const promise = await api.post("https://localhost:7118/api/Evento", {
+        nomeEvento,
+        descricao,
+        idTipoEvento,
+        dataEvento,
+        idInstituicao,
+      });
+      console.log(promise.data);
+      getEventos();
       setNotifyUser({
         titleNote: "Sucesso",
         textNote: `Cadastrado com sucesso!`,
@@ -119,34 +116,33 @@ const EventosPage = () => {
           "Imagem de ilustração de sucesso. Moça segurando um balão com símbolo de confirmação ok.",
         showMessage: true,
       });
+      setNomeEvento("");
+      setDescricao("");
+      setIdTipoEvento("");
+      setIdInstituicao("");
+      setDataEvento("");
     } catch (error) {
-      console.error(error + "Erro ao cadastrar evento");
+      console.error("Erro ao cadastrar evento: " + error);
     }
 
     //limpar o formulário
-    setTitulo("");
-    setDescricao("");
-    setDataEvento("");
-    setIdTipoEvento("");
-    setIdInstituicao("");
     setShowSpinner(false);
   }
 
   //MOSTRAR FORMULÁRIO DE EDIÇÃO
 
-  function showUpdateForm(evento) {
+  function showUpdateForm(e) {
     setFrmEdit(true);
-    setTitulo(evento.nomeEvento);
-    setDescricao(evento.descricao);
-    setDataEvento(evento.dataEvento.substr(0, 10));
-    setIdTipoEvento(evento.idTipoEvento);
-    setIdInstituicao(evento.idInstituicao);
-
-    setIdEvento(evento.idEvento);
+    setNomeEvento(e.nomeEvento);
+    setDescricao(e.descricao);
+    setIdTipoEvento(e.idTipoEvento);
+    setIdInstituicao(e.idInstituicao);
+    setDataEvento(e.dataEvento.slice(0, 10));
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setIdEvento(e.idEvento);
   }
 
-
-  // ATUALIZAR EVENTO
+  //ATUALIZAR EVENTO
   async function handleUpdate(e) {
     e.preventDefault();
     setShowSpinner(true);
@@ -165,9 +161,14 @@ const EventosPage = () => {
 
     try {
       const promise = await api.put(`https://localhost:7118/api/Evento/${idEvento}`, {
-        nomeEvento: nomeEvento, descricao: descricao, idTipoEvento: idTipoEvento, idInstituicao: idInstituicao, dataEvento: dataEvento
+        nomeEvento,
+        descricao,
+        idTipoEvento,
+        dataEvento,
+        idInstituicao,
       });
-      getEvento();
+      console.log(promise.datas);
+      getEventos();
       setNotifyUser({
         titleNote: "Sucesso",
         textNote: `Atualizado com sucesso!`,
@@ -176,11 +177,7 @@ const EventosPage = () => {
           "Imagem de ilustração de sucesso. Moça segurando um balão com símbolo de confirmação ok.",
         showMessage: true,
       });
-      setTitulo("");
-      setDescricao("");
-      setDataEvento("");
-      setIdTipoEvento("");
-      setIdInstituicao("");
+      setNomeEvento("");
       setFrmEdit(false);
     } catch (error) {
       console.error("Erro ao atualizar evento: " + error);
@@ -189,24 +186,24 @@ const EventosPage = () => {
     setShowSpinner(false);
   }
 
+  //CANCELA EDIÇÃO
   function cancelUpdate() {
-    //limpar o formulário
-    setTitulo("");
+    setFrmEdit(false);
+    setNomeEvento("");
     setDescricao("");
-    setDataEvento("");
     setIdTipoEvento("");
     setIdInstituicao("");
-    setFrmEdit(false);
+    setDataEvento("");
   }
 
-
-  // DELETAR EVENTO
+  //DELETAR EVENTO
   async function handleDelete(id) {
     setShowSpinner(true);
     try {
-      evento.filter((evento) => evento.idEvento === id);
+      eventos.filter((tipoEvento) => tipoEvento.idTipoEvento === id);
       const promise = await api.delete(`https://localhost:7118/api/Evento/${id}`);
-      getEvento();
+      console.log(promise.data);
+      getEventos();
       setNotifyUser({
         titleNote: "Sucesso",
         textNote: `Deletado com sucesso!`,
@@ -216,7 +213,7 @@ const EventosPage = () => {
         showMessage: true,
       });
     } catch (error) {
-      console.error("Erro ao deletar evento: " + error);
+      console.error("Erro ao deletar tipo de evento: " + error);
     }
     setShowSpinner(false);
   }
@@ -234,7 +231,10 @@ const EventosPage = () => {
               additionalClass="margem-acima"
             />
 
-            <ImageIllustrator alterText="??????" imageRender={eventImage} />
+            <ImageIllustrator
+              alterText="Homem interagindo com uma plataforma"
+              imageRender={eventImage}
+            />
 
             <form
               className="ftipo-evento"
@@ -243,15 +243,16 @@ const EventosPage = () => {
             >
               {!frmEdit ? (
                 <>
+                  <p>Tela de Cadastro</p>
                   <Input
-                    id="nomeEvento"
-                    placeholder="Título"
+                    id="nome-evento"
+                    placeholder="Nome"
                     type="text"
-                    name="nomeEvento"
+                    name="nome-evento"
                     value={nomeEvento}
                     required
                     manipulationFunction={(e) => {
-                      setTitulo(e.target.value);
+                      setNomeEvento(e.target.value);
                     }}
                   />
                   <Input
@@ -265,37 +266,51 @@ const EventosPage = () => {
                       setDescricao(e.target.value);
                     }}
                   />
-                  <Input
-                    id="dataEvento"
-                    placeholder="dataEvento"
-                    type="date"
-                    name="descricao"
-                    value={dataEvento}
+                  <Select
+                    id="tipo-evento"
+                    name="tipo-evento"
+                    object={tiposEvento}
                     required
-                    manipulationFunction={(e) => {
-                      setDataEvento(e.target.value);
-                    }}
-                  />
-                  <SelectTipo
-                    dados={tiposEvento}
-                    id="idTipoEvento"
-                    placeholder="Tipo do Evento"
-                    name="idTipoEvento"
                     value={idTipoEvento}
-                    required
+                    mapOption={(option) => (
+                      <option
+                        value={option.idTipoEvento}
+                        key={option.idTipoEvento}
+                      >
+                        {option.titulo}
+                      </option>
+                    )}
                     manipulationFunction={(e) => {
                       setIdTipoEvento(e.target.value);
                     }}
                   />
-                  <SelectInst
-                    dados={instituicao}
-                    id="idInstituicao"
-                    placeholder="idInstituicao"
-                    name="idInstituicao"
+                  <Select
                     value={idInstituicao}
+                    id="instituicao"
+                    name="instituicao"
                     required
+                    mapOption={(option) => (
+                      <option
+                        value={option.idInstituicao}
+                        key={option.idInstituicao}
+                      >
+                        {option.nomeFantasia}
+                      </option>
+                    )}
+                    object={instituicoes}
                     manipulationFunction={(e) => {
                       setIdInstituicao(e.target.value);
+                    }}
+                  />
+                  <Input
+                    id="data-evento"
+                    placeholder="Data"
+                    type="date"
+                    name="data-evento"
+                    value={dataEvento}
+                    required
+                    manipulationFunction={(e) => {
+                      setDataEvento(e.target.value);
                     }}
                   />
                   <Button
@@ -309,14 +324,14 @@ const EventosPage = () => {
                 <>
                   <p>Tela de Edição</p>
                   <Input
-                    id="nomeEvento"
-                    placeholder="Título"
+                    id="nome-evento"
+                    placeholder="Nome"
                     type="text"
-                    name="nomeEvento"
+                    name="nome-evento"
                     value={nomeEvento}
                     required
                     manipulationFunction={(e) => {
-                      setTitulo(e.target.value);
+                      setNomeEvento(e.target.value);
                     }}
                   />
                   <Input
@@ -330,38 +345,51 @@ const EventosPage = () => {
                       setDescricao(e.target.value);
                     }}
                   />
-                  <Input
-                    id="dataEvento"
-                    placeholder="dataEvento"
-                    type="date"
-                    name="descricao"
-                    value={dataEvento}
+                  <Select
+                    id="tipo-evento"
+                    name="tipo-evento"
+                    object={tiposEvento}
                     required
-                    manipulationFunction={(e) => {
-                      setDataEvento(e.target.value);
-                    }}
-                  />
-                  <SelectTipo
-                    dados={tiposEvento}
-                    id="idTipoEvento"
-                    placeholder="Tipo do Evento"
-                    type="number"
-                    name="idTipoEvento"
                     value={idTipoEvento}
-                    required
+                    mapOption={(option) => (
+                      <option
+                        value={option.idTipoEvento}
+                        key={option.idTipoEvento}
+                      >
+                        {option.titulo}
+                      </option>
+                    )}
                     manipulationFunction={(e) => {
                       setIdTipoEvento(e.target.value);
                     }}
                   />
-                  <SelectInst
-                    dados={instituicao}
-                    id="idInstituicao"
-                    placeholder="idInstituicao"
-                    name="idInstituicao"
+                  <Select
                     value={idInstituicao}
+                    id="instituicao"
+                    name="instituicao"
                     required
+                    mapOption={(option) => (
+                      <option
+                        value={option.idInstituicao}
+                        key={option.idInstituicao}
+                      >
+                        {option.nomeFantasia}
+                      </option>
+                    )}
+                    object={instituicoes}
                     manipulationFunction={(e) => {
                       setIdInstituicao(e.target.value);
+                    }}
+                  />
+                  <Input
+                    id="data-evento"
+                    placeholder="Data"
+                    type="date"
+                    name="data-evento"
+                    value={dataEvento}
+                    required
+                    manipulationFunction={(e) => {
+                      setDataEvento(e.target.value);
                     }}
                   />
                   <div className="buttons-editbox">
@@ -392,8 +420,8 @@ const EventosPage = () => {
         <Container>
           <Title titleText={"Lista de Eventos"} color="white" />
 
-          <TableEp
-            dados={evento}
+          <TableEventos
+            dados={eventos}
             fnDelete={handleDelete}
             fnUpdate={showUpdateForm}
           />

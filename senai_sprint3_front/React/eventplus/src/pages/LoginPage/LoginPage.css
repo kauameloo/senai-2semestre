@@ -69,7 +69,8 @@
   
   .frm-login__link {
     text-decoration: none;
-    margin-top: 40px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     color: lightgrey;
     font-size: 0.9rem;
     font-family: Poppins-Regular;
