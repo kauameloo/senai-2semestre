@@ -4,7 +4,7 @@ import MainContent from "../../components/MainContent/MainContent";
 import Title from "../../components/Title/Title";
 import Table from "./TableEva/TableEva";
 import Container from "../../components/Container/Container";
-import { Select } from "../../components/FormComponents/FormComponents";
+import { Select, SelectA } from "../../components/FormComponents/FormComponents";
 import Spinner from "../../components/Spinner/Spinner";
 import Modal from "../../components/Modal/Modal";
 import api from "../../Services/Service";
@@ -30,13 +30,26 @@ const EventosAlunoPage = () => {
   const { userData, setUserData } = useContext(userContext);
 
   useEffect(() => {
-    function loadEventsType() {
-        
+    async function loadEventsType() {
+        setShowSpinner(true);
+
+        try {
+            if (tipoEvento == "1") {
+                const promise = await api.get("https://localhost:7118/api/Evento")
+                setEventos(promise.data);
+            } else {
+                const promiseEventos = await api.get(`https://localhost:7118/api/PresencasEvento/ListarMinhas/${userData.userId}`) 
+                setEventos(promiseEventos.data)
+            }
+        } catch (error) {
+            console.log("Erro ao carregar os eventos");
+        }
+        setShowSpinner(false);
     }
     
 
     loadEventsType();
-  }, []);
+  }, [tipoEvento]);
 
   // toggle meus eventos ou todos os eventos
   function myEvents(tpEvent) {
@@ -60,23 +73,21 @@ const EventosAlunoPage = () => {
   }
   return (
     <>
-      <Header exibeNavbar={exibeNavbar} setExibeNavbar={setExibeNavbar} />
-
       <MainContent>
         <Container>
           <Title titleText={"Eventos"} className="custom-title" />
 
-          <Select
+          <SelectA
             id="id-tipo-evento"
             name="tipo-evento"
             required={true}
-            options={quaisEventos} // aqui o array dos tipos
-            onChange={(e) => myEvents(e.target.value)} // aqui só a variável state
-            defaultValue={tipoEvento}
+            dados={quaisEventos} // aqui o array dos tipos
+            manipulationFunction={(e) => myEvents(e.target.value)} // aqui só a variável state
+            value={tipoEvento}
             className="select-tp-evento"
           />
           <Table
-            dados={eventos}
+            object={eventos}
             fnConnect={handleConnect}
             fnShowModal={() => {
               showHideModal();

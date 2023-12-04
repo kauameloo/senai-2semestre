@@ -11,7 +11,7 @@ import { Tooltip } from "react-tooltip";
 import "./TableEva.css";
 import dateFormatDbToView from "../../../Utils/stringFunction";
 
-const Table = ({ dados, fnConnect = null, fnShowModal = null }) => {
+const Table = ({ object, fnConnect = null, fnShowModal = null }) => {
   return (
     <table className="tbal-data">
       <thead className="tbal-data__head">
@@ -28,7 +28,7 @@ const Table = ({ dados, fnConnect = null, fnShowModal = null }) => {
         </tr>
       </thead>
       <tbody>
-        {dados.map((e) => {
+        {object.map((e) => {
           return (
             <tr className="tbal-data__head-row" key={Math.random()}>
               <td className="tbal-data__data tbal-data__data--big">
@@ -49,7 +49,7 @@ const Table = ({ dados, fnConnect = null, fnShowModal = null }) => {
                   onClick={fnShowModal}
                 />
 
-                <ToggleSwitch manipulationFunction={fnConnect} />
+                {/* <ToggleSwitch manipulationFunction={fnConnect} /> */}
               </td>
             </tr>
           );

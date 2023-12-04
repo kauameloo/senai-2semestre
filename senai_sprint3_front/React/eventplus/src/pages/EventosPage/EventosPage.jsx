@@ -62,7 +62,14 @@ const EventosPage = () => {
     setShowSpinner(true);
     try {
       const promise = await api.get("https://localhost:7118/api/Instituicao");
-      setInstituicoes(promise.data);
+      const dadosInstituicao = (promise.data);
+
+      if (dadosInstituicao && dadosInstituicao.length > 0) {
+        setInstituicoes(dadosInstituicao);
+        setIdInstituicao(dadosInstituicao[0].idInstituicao);
+      } else {
+        console.error("Nenhuma instituição encontrada.");
+      }
     } catch (error) {
       console.error("Erro ao carregar instituições: " + error);
     }
@@ -192,7 +199,6 @@ const EventosPage = () => {
     setNomeEvento("");
     setDescricao("");
     setIdTipoEvento("");
-    setIdInstituicao("");
     setDataEvento("");
   }
 
@@ -284,24 +290,6 @@ const EventosPage = () => {
                       setIdTipoEvento(e.target.value);
                     }}
                   />
-                  <Select
-                    value={idInstituicao}
-                    id="instituicao"
-                    name="instituicao"
-                    required
-                    mapOption={(option) => (
-                      <option
-                        value={option.idInstituicao}
-                        key={option.idInstituicao}
-                      >
-                        {option.nomeFantasia}
-                      </option>
-                    )}
-                    object={instituicoes}
-                    manipulationFunction={(e) => {
-                      setIdInstituicao(e.target.value);
-                    }}
-                  />
                   <Input
                     id="data-evento"
                     placeholder="Data"
@@ -361,24 +349,6 @@ const EventosPage = () => {
                     )}
                     manipulationFunction={(e) => {
                       setIdTipoEvento(e.target.value);
-                    }}
-                  />
-                  <Select
-                    value={idInstituicao}
-                    id="instituicao"
-                    name="instituicao"
-                    required
-                    mapOption={(option) => (
-                      <option
-                        value={option.idInstituicao}
-                        key={option.idInstituicao}
-                      >
-                        {option.nomeFantasia}
-                      </option>
-                    )}
-                    object={instituicoes}
-                    manipulationFunction={(e) => {
-                      setIdInstituicao(e.target.value);
                     }}
                   />
                   <Input
