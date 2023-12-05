@@ -49,7 +49,7 @@ const Table = ({ object, fnConnect = null, fnShowModal = null }) => {
                   onClick={fnShowModal}
                 />
 
-                {/* <ToggleSwitch manipulationFunction={fnConnect} /> */}
+                <ToggleSwitch manipulationFunction={fnConnect} />
               </td>
             </tr>
           );
