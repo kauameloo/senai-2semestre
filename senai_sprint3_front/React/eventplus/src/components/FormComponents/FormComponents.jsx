@@ -47,34 +47,6 @@ export const Button = ({
   );
 };
 
-export const SelectA = ({
-  id,
-  name,
-  required,
-  dados = [],
-  additionalClass = "",
-  manipulationFunction,
-  value,
-}) => {
-  return (
-    <select
-      id={id}
-      name={name}
-      required={required}
-      className={`input-component ${additionalClass}`}
-      onChange={manipulationFunction}
-      value={value}
-      // name="tipo-evento-select"
-      // className="input-component"
-    >
-      <option value="">Selecione</option>
-      {dados.map((opt) => {
-        return <option key={opt.value} value={opt.value}>{`${opt.text}`}</option>;
-      })}
-    </select>
-  );
-};
-
 export const Select = ({
   id,
   required,
@@ -83,6 +55,7 @@ export const Select = ({
   value,
   manipulationFunction,
   object = [],
+  mapOption,
 }) => {
   return (
     <select
@@ -94,14 +67,7 @@ export const Select = ({
       onChange={manipulationFunction}
     >
       <option value="select">Selecione</option>
-      {object.map((option) => (
-        <option
-          value={option.idTipoEvento}
-          key={option.idTipoEvento}
-        >
-          {option.titulo}
-        </option>
-      ))}
+      {object.map(mapOption)}
     </select>
   );
 };

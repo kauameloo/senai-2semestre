@@ -1,17 +1,15 @@
 import React from "react";
 import comentaryIcon from "../../../assets/images/comentary-icon.svg";
 import trashDelete from "../../../assets/images/trash-delete.svg";
-
 import ToggleSwitch from "../../../components/Toggle/Toggle";
 // importa a biblioteca de tootips ()
 import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip } from "react-tooltip";
 
 // import trashDelete from "../../../assets/images/trash-delete.svg";
-import "./TableEva.css";
-import dateFormatDbToView from "../../../Utils/stringFunction";
+import "./Table.css";
 
-const Table = ({ object, fnConnect = null, fnShowModal = null }) => {
+const Table = ({ dados, fnConnect = null, fnShowModal = null }) => {
   return (
     <table className="tbal-data">
       <thead className="tbal-data__head">
@@ -28,38 +26,49 @@ const Table = ({ object, fnConnect = null, fnShowModal = null }) => {
         </tr>
       </thead>
       <tbody>
-        {object.map((e) => {
-          return (
+        {dados.length === 0 ? (
+          <tr className="tbal-data__head-row" key={Math.random()}>
+            <td className="tbal-data__data tbal-data__data--big"></td>
+            <td className="tbal-data__data tbal-data__data--big">
+              Você ainda não cadastrou nenhuma presença
+            </td>
+            <td className="tbal-data__data tbal-data__data--big"></td>
+          </tr>
+        ) : (
+          dados.map((e) => (
             <tr className="tbal-data__head-row" key={Math.random()}>
               <td className="tbal-data__data tbal-data__data--big">
                 {e.nomeEvento}
               </td>
-              
+
               <td className="tbal-data__data tbal-data__data--big tbal-data__btn-actions">
                 {/* {e.dataEvento} */}
-                {dateFormatDbToView(e.dataEvento)}
+                {new Date(e.dataEvento).toLocaleDateString("pt-BR")}
               </td>
 
               <td className="tbal-data__data tbal-data__data--big tbal-data__btn-actions">
-                <img
-                  className="tbal-data__icon"
-                  idevento={e.idEvento}
-                  src={comentaryIcon}
-                  alt=""
-                  onClick={fnShowModal}
+                {e.situacao ? (
+                  <img
+                    className="tbal-data__icon"
+                    src={comentaryIcon}
+                    alt=""
+                    onClick={() => fnShowModal(e.idEvento)}
+                  />
+                ) : null}
+                <ToggleSwitch
+                  toggleActive={e.situacao}
+                  manipulationFunction={() => {
+                    fnConnect(
+                      e.idEvento,
+                      e.idPresencaEvento,
+                      e.situacao ? false : true
+                    );
+                  }}
                 />
-
-                <ToggleSwitch toggleActive={e.situacao} manipulationFunction={() => {
-                  fnConnect(
-                    e.idEvento,
-                    e.situacao ? false : true,
-                    e.idPresencaEvento //parâmetro opcional
-                  )
-                }} />
               </td>
             </tr>
-          );
-        })}
+          ))
+        )}
       </tbody>
     </table>
   );

@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import "./LoginPage.css";
 
 const LoginPage = () => {
-  const [user, setUser] = useState({ email: "kauazin@email.com", senha: "kauazin123" });
+  const [user, setUser] = useState({ email: "adm@email.com", senha: "123123" });
 
   const [notifyUser, setNotifyUser] = useState({});
 
@@ -30,7 +30,7 @@ const LoginPage = () => {
     
     if(user.email.length >= 3 && user.senha.length >= 3){
       try {
-        const promise = await api.post("https://localhost:7118/api/Login", {
+        const promise = await api.post("/Login", {
           email: user.email,
           senha: user.senha,
         });

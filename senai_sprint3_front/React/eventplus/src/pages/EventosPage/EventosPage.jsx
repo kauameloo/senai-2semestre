@@ -39,7 +39,7 @@ const EventosPage = () => {
   async function getEventos() {
     setShowSpinner(true);
     try {
-      const promise = await api.get("https://localhost:7118/api/Evento");
+      const promise = await api.get("/Evento");
       setEventos(promise.data);
     } catch (error) {
       console.error("Erro ao carregar eventos: " + error);
@@ -50,7 +50,7 @@ const EventosPage = () => {
   async function getTiposEvento() {
     setShowSpinner(true);
     try {
-      const promise = await api.get("https://localhost:7118/api/TiposEvento");
+      const promise = await api.get("/TiposEvento");
       setTiposEvento(promise.data);
     } catch (error) {
       console.error("Erro ao carregar tipos de eventos: " + error);
@@ -61,15 +61,8 @@ const EventosPage = () => {
   async function getInstituicoes() {
     setShowSpinner(true);
     try {
-      const promise = await api.get("https://localhost:7118/api/Instituicao");
-      const dadosInstituicao = (promise.data);
-
-      if (dadosInstituicao && dadosInstituicao.length > 0) {
-        setInstituicoes(dadosInstituicao);
-        setIdInstituicao(dadosInstituicao[0].idInstituicao);
-      } else {
-        console.error("Nenhuma instituição encontrada.");
-      }
+      const promise = await api.get("/Instituicao");
+      setInstituicoes(promise.data);
     } catch (error) {
       console.error("Erro ao carregar instituições: " + error);
     }
@@ -106,7 +99,7 @@ const EventosPage = () => {
     }
     //chamar a api
     try {
-      const promise = await api.post("https://localhost:7118/api/Evento", {
+      const promise = await api.post("/Evento", {
         nomeEvento,
         descricao,
         idTipoEvento,
@@ -167,7 +160,7 @@ const EventosPage = () => {
     }
 
     try {
-      const promise = await api.put(`https://localhost:7118/api/Evento/${idEvento}`, {
+      const promise = await api.put(`/Evento/${idEvento}`, {
         nomeEvento,
         descricao,
         idTipoEvento,
@@ -199,6 +192,7 @@ const EventosPage = () => {
     setNomeEvento("");
     setDescricao("");
     setIdTipoEvento("");
+    setIdInstituicao("");
     setDataEvento("");
   }
 
@@ -207,7 +201,7 @@ const EventosPage = () => {
     setShowSpinner(true);
     try {
       eventos.filter((tipoEvento) => tipoEvento.idTipoEvento === id);
-      const promise = await api.delete(`https://localhost:7118/api/Evento/${id}`);
+      const promise = await api.delete(`/Evento/${id}`);
       console.log(promise.data);
       getEventos();
       setNotifyUser({
@@ -290,6 +284,24 @@ const EventosPage = () => {
                       setIdTipoEvento(e.target.value);
                     }}
                   />
+                  <Select
+                    value={idInstituicao}
+                    id="instituicao"
+                    name="instituicao"
+                    required
+                    mapOption={(option) => (
+                      <option
+                        value={option.idInstituicao}
+                        key={option.idInstituicao}
+                      >
+                        {option.nomeFantasia}
+                      </option>
+                    )}
+                    object={instituicoes}
+                    manipulationFunction={(e) => {
+                      setIdInstituicao(e.target.value);
+                    }}
+                  />
                   <Input
                     id="data-evento"
                     placeholder="Data"
@@ -349,6 +361,24 @@ const EventosPage = () => {
                     )}
                     manipulationFunction={(e) => {
                       setIdTipoEvento(e.target.value);
+                    }}
+                  />
+                  <Select
+                    value={idInstituicao}
+                    id="instituicao"
+                    name="instituicao"
+                    required
+                    mapOption={(option) => (
+                      <option
+                        value={option.idInstituicao}
+                        key={option.idInstituicao}
+                      >
+                        {option.nomeFantasia}
+                      </option>
+                    )}
+                    object={instituicoes}
+                    manipulationFunction={(e) => {
+                      setIdInstituicao(e.target.value);
                     }}
                   />
                   <Input

@@ -32,7 +32,7 @@ const TipoEventosPage = () => {
   async function getTiposEventos() {
     setShowSpinner(true);
     try {
-      const promise = await api.get("https://localhost:7118/api/TiposEvento");
+      const promise = await api.get("/TiposEvento");
       setTiposEvento(promise.data);
     } catch (error) {
       console.error("Erro ao carregar tipos de evento: " + error);
@@ -68,7 +68,7 @@ const TipoEventosPage = () => {
     }
     //chamar a api
     try {
-      const promise = await api.post("https://localhost:7118/api/TiposEvento", { titulo });
+      const promise = await api.post("/TiposEvento", { titulo });
       console.log(promise.data);
       getTiposEventos();
       setNotifyUser({
@@ -114,7 +114,7 @@ const TipoEventosPage = () => {
     }
 
     try {
-      const promise = await api.put(`https://localhost:7118/api/TiposEvento/${idTipoEvento}`, {
+      const promise = await api.put(`/TiposEvento/${idTipoEvento}`, {
         titulo,
       });
       console.log(promise.data);
@@ -145,7 +145,7 @@ const TipoEventosPage = () => {
     setShowSpinner(true);
     try {
       tiposEvento.filter((tipoEvento) => tipoEvento.idTipoEvento === id);
-      const promise = await api.delete(`https://localhost:7118/api/TiposEvento/${id}`);
+      const promise = await api.delete(`/TiposEvento/${id}`);
       console.log(promise.data);
       getTiposEventos();
       setNotifyUser({
