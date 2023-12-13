@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.Azure.CognitiveServices.ContentModerator;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using System.Reflection;
@@ -69,7 +70,10 @@ builder.Services.AddSwaggerGen(options =>
             Name = "Senai Informática - Turma Manhã",
             Url = new Uri("https://github.com/senai-desenvolvimento")
         }
+
     });
+
+    options.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
 
 
     //Configura o Swagger para usar o arquivo XML gerado
@@ -115,14 +119,28 @@ builder.Services.AddCors(options =>
         });
 });
 
+//HABILITA O SERVIÇO DE MODERADOR DE CONTEÚDO DO AZURE
+builder.Services.AddSingleton(provider => new ContentModeratorClient(
+    new ApiKeyServiceClientCredentials("5ba8a5990c1e4c15bb73ee5b44e743b4")) //ele espera um parametro key, que é a chave q temos la na plataforma azure depois de criar o recurso "Content Moderator"
+{
+    Endpoint = "https://eventcontentmoderatorkaua.cognitiveservices.azure.com/" //link que também está no recurso criado do azure
+}
+    );
+
 var app = builder.Build();
 
-//Habilite o middleware para atender ao documento JSON gerado e à interface do usuário do Swagger
+//Alterar dados do Swagger para a seguinte configuração
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
 }
+
+app.UseSwagger(options =>
+{
+    options.SerializeAsV2 = true;
+});
+
+app.UseSwaggerUI();
 
 //Para atender à interface do usuário do Swagger na raiz do aplicativo
 app.UseSwaggerUI(options =>
@@ -130,6 +148,8 @@ app.UseSwaggerUI(options =>
     options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
     options.RoutePrefix = string.Empty;
 });
+
+app.UseRouting();
 
 app.UseCors("CorsPolicy");
 

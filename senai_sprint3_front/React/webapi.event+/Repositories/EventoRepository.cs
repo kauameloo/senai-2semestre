@@ -62,7 +62,7 @@ namespace webapi.event_.Repositories
             {
                 throw;
             }
-            
+
         }
 
         public void Deletar(Guid id)
@@ -82,8 +82,9 @@ namespace webapi.event_.Repositories
             {
                 throw;
             }
-            
+
         }
+
 
         public List<Evento> Listar()
         {
