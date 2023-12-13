@@ -13,9 +13,8 @@ namespace webapi.event_.Controllers
     [Produces("application/json")]
     public class ComentariosEventoController : ControllerBase
     {
-        private ComentariosEventoRepository _comentariosEventoRepository { get; set; }
 
-        public ComentariosEventoController() => _comentariosEventoRepository = new ComentariosEventoRepository();
+        ComentariosEventoRepository _comentariosEventoRepository = new ComentariosEventoRepository();
 
         private readonly ContentModeratorClient? _contentModeratorClient;
 
@@ -64,11 +63,11 @@ namespace webapi.event_.Controllers
         }
 
         [HttpGet("ListarSomenteExibe")]
-        public IActionResult GetIA()
+        public IActionResult GetIA(Guid id)
         {
             try
             {
-                return Ok(_comentariosEventoRepository.ListarSomenteExibe());
+                return Ok(_comentariosEventoRepository.ListarSomenteExibe(id));
             }
             catch (Exception e)
             {
